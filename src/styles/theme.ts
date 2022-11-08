@@ -7,6 +7,9 @@ const config = {
   },
   green: {
     '05': '#C0F7EA',
+    1: '#AAEEDF',
+    2: '#80DEC8',
+    3: '#55CDB2',
     4: '#2BBD9B',
     5: '#00AC85',
     6: '#008A6A',
@@ -14,6 +17,7 @@ const config = {
     8: '#004535',
   },
   purple: {
+    '05': '#F0EEFF',
     1: '#E1DCFF',
     2: '#C3B9FF',
     3: '#A497FF',

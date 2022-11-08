@@ -1,30 +1,38 @@
-import {Box, Button, Container, Icon, Text, VStack} from '@chakra-ui/react';
+import { Box, Button, Container, Text, VStack } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import React from 'react';
 
+import FormPreviewCard from '../components/Dashboard/FormPreviewCard';
 import { Layout } from '../features/common/Layout';
-import {Plus} from "phosphor-react";
 
 const Dashboard = () => {
+  const router = useRouter();
   return (
     <Layout>
-      <VStack p={5}>
-        <Container maxWidth='container.lg' p={4}>
-          <Box display='flex' alignItems={"start"} flexDirection='column'>
-            <Text fontSize={"md"} fontWeight={600}>Your forms</Text>
-            <Button leftIcon={<Icon
-              weight='bold'
-              as={Plus}
-            />}  mt={"4"}>
+      <Container maxWidth='container.lg'>
+        <VStack display='flex' alignItems='left'>
+          <Box display='flex' alignItems='start' flexDirection='column'>
+            <Text color='purple.3' fontSize='md' fontWeight={600}>
+              Your forms
+            </Text>
+            <Button
+              onClick={async () => {
+                await router.push('/forms/new');
+              }}
+              size='md'
+              _hover={{ bg: 'purple.1' }}
+              color='purple.4'
+              bg='purple.05'
+              mt='4'
+            >
               New form
             </Button>
-            <VStack mt={4}>
-              <Box p={3} borderRadius={"md"} borderColor='blue.400' border='1px' >
-                hello
-              </Box>
+            <VStack mt={4} w='full' display='flex' alignItems='left'>
+              <FormPreviewCard />
             </VStack>
           </Box>
-        </Container>
-      </VStack>
+        </VStack>
+      </Container>
     </Layout>
   );
 };

@@ -38,14 +38,19 @@ export function Layout({ children, isLoading }: LayoutProps) {
       <Container maxW='container.xl'>
         <HStack p={4}>
           <Link href='/'>
-            <Text as='a' fontSize='2xl'>
+            <Text color='purple.5' fontWeight='600' as='a' fontSize='2xl'>
               Formify
             </Text>
           </Link>
           <Spacer />
           <HStack>
             {!auth && (
-              <Button _hover={{ bg: 'green.5' }} bg='green.4' onClick={login}>
+              <Button
+                color='white'
+                _hover={{ bg: 'green.5' }}
+                bg='green.4'
+                onClick={login}
+              >
                 Connect Wallet
               </Button>
             )}
@@ -57,6 +62,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
                     _expanded={{ bg: 'green.4' }}
                     bg='green.4'
                     as={Button}
+                    color='white'
                     rightIcon={<Icon as={CaretDown} />}
                   >
                     {shortEthAddress(auth.account)}
@@ -83,7 +89,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
                       _hover={{ bg: 'gre.500' }}
                       onClick={async () => {
                         await logout();
-                        // navigate('/')
+                        await router.push('/');
                       }}
                       icon={
                         <Icon

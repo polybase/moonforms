@@ -2,11 +2,11 @@ import {
   Box,
   Button,
   Container,
-  Flex,
   HStack,
   Image,
   Link,
-  Spacer, Stack,
+  Spacer,
+  Stack,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
       await router.push('/dashboard');
     }
     await router.push('/dashboard');
-  }
+  };
   // const polybase = usePolybase();
   // const { data } = useCollection(polybase.collection('demo/social/users'));
   // const oneDocument = useDocument(
@@ -49,7 +49,7 @@ const Home: NextPage = () => {
             flexDirection='column'
             mt={12}
           >
-            <Text fontWeight='700' fontSize='3xl'>
+            <Text color='purple.5' fontWeight='700' fontSize='3xl'>
               Create forms and collect data with{' '}
               <Text
                 as='span'
@@ -61,9 +61,9 @@ const Home: NextPage = () => {
               forms
             </Text>
             <HStack mt={4} alignContent='center'>
-              <Text>Powered by{' '}</Text>
+              <Text color='purple.3'>Powered by </Text>
               <Image src='/logo.svg' alt='polybase logo' />
-              <Text>
+              <Text color='purple.3'>
                 <NextLink href='https://www.polybase.xyz/'>
                   <Link as='span' fontWeight='600'>
                     Polybase
@@ -75,6 +75,7 @@ const Home: NextPage = () => {
             <Button
               onClick={handleGetStartedClick}
               mt={10}
+              color='white'
               _hover={{ bg: 'purple.5' }}
               bg='purple.4'
             >
@@ -83,17 +84,15 @@ const Home: NextPage = () => {
           </Box>
         </Container>
         <Container maxWidth='container.lg'>
-          <Stack
-            direction={['column', 'row']} spacing='24px'
-          >
-            <Box  maxWidth='xs'>
+          <Stack direction={['column', 'row']} spacing='24px'>
+            <Box maxWidth='xs'>
               <VStack textAlign='left'>
                 <Image src='/thumbs_up.svg' alt='polybase logo' />
                 <Box>
-                  <Text fontWeight={600} fontSize='xl'>
+                  <Text color='purple.4' fontWeight={700} fontSize='xl'>
                     Easy to use
                   </Text>
-                  <Text fontSize='md'>
+                  <Text color='purple.3' fontSize='md'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
@@ -102,14 +101,14 @@ const Home: NextPage = () => {
               </VStack>
             </Box>
             <Spacer />
-            <Box  maxWidth='xs'>
+            <Box maxWidth='xs'>
               <VStack>
                 <Image src='/data.svg' alt='polybase logo' />
                 <Box>
-                  <Text fontWeight={600} fontSize='xl'>
+                  <Text color='purple.4' fontWeight={700} fontSize='xl'>
                     Export your data
                   </Text>
-                  <Text fontSize='md'>
+                  <Text color='purple.3' fontSize='md'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
@@ -118,14 +117,14 @@ const Home: NextPage = () => {
               </VStack>
             </Box>
             <Spacer />
-            <Box   maxWidth='xs'>
+            <Box maxWidth='xs'>
               <VStack>
                 <Image src='/book.svg' alt='polybase logo' />
                 <Box>
-                  <Text fontWeight={600} fontSize='xl'>
+                  <Text color='purple.4' fontWeight={700} fontSize='xl'>
                     Open-source
                   </Text>
-                  <Text fontSize='md'>
+                  <Text color='purple.3' fontSize='md'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
