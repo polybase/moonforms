@@ -29,6 +29,7 @@ const Dashboard = () => {
             </Button>
             <VStack mt={4} w='full' display='flex' alignItems='left'>
               <FormPreviewCard />
+              <FormPreviewCard />
             </VStack>
           </Box>
         </VStack>

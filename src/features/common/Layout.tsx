@@ -38,7 +38,12 @@ export function Layout({ children, isLoading }: LayoutProps) {
       <Container maxW='container.xl'>
         <HStack p={4}>
           <Link href='/'>
-            <Text color='purple.5' fontWeight='600' as='a' fontSize='2xl'>
+            <Text
+              cursor='pointer'
+              color='purple.5'
+              fontWeight='700'
+              fontSize='3xl'
+            >
               Formify
             </Text>
           </Link>

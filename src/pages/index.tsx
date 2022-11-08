@@ -31,13 +31,7 @@ const Home: NextPage = () => {
     }
     await router.push('/dashboard');
   };
-  // const polybase = usePolybase();
-  // const { data } = useCollection(polybase.collection('demo/social/users'));
-  // const oneDocument = useDocument(
-  //   polybase
-  //     .collection('demo/social/users')
-  //     .doc('0x111e5fea3d613eb866fd41b30c8257c930180428')
-  // );
+
   return (
     <Layout>
       <VStack p={5} spacing={{ base: 10, md: 44, lg: 28 }}>

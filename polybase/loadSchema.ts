@@ -9,6 +9,14 @@ collection Form {
   createdAt: string;
   
   @index(id, title, description, createdAt);
+
+  constructor (id: string, title: string, description: string, creatorPk: string, createdAt: string) {
+    this.id = id;
+    this.name = name;
+    this.title = title;
+    this.description = description;
+    creatorPk = 
+  }
 }
 
 collection Question {

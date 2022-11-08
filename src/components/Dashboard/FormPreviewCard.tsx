@@ -41,7 +41,7 @@ const FormPreviewCard = () => {
             bg='white'
             leftIcon={<Icon weight='bold' as={LinkSimple} />}
           >
-            Share link
+            Copy link
           </Button>
         </HStack>
       </VStack>
