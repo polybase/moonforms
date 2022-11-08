@@ -1,9 +1,11 @@
-export interface User {
-  id: string;
-  name?: string;
-  desc?: string;
-  icon?: string;
-  account: string;
-  pvkey: string;
-  $pk: string;
+export interface Form {
+  title: string;
+  description: string;
+  questions: Question[];
+}
+
+export interface Question {
+  title: string;
+  type: string;
+  required: boolean;
 }

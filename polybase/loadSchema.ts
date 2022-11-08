@@ -4,18 +4,18 @@ const schema = `
 collection Form {
   id: string;
   title: string;
-  description?: string;
+  description: string;
   creatorPk: string;
   createdAt: string;
   
   @index(id, title, description, createdAt);
 
-  constructor (id: string, title: string, description: string, creatorPk: string, createdAt: string) {
+  constructor (id: string, title: string, description: string, createdAt: string) {
     this.id = id;
-    this.name = name;
     this.title = title;
     this.description = description;
-    creatorPk = 
+    this.createdAt = createdAt;
+    this.creatorPk = ctx.publicKey;
   }
 }
 
@@ -50,7 +50,7 @@ collection Response {
 
 async function loadSchema () {
   const db = new Polybase()
-  await db.applySchema(schema, 'forms-testing');
+  await db.applySchema(schema, 'Forms-testing');
   return 'Schema loaded';
 }
 
