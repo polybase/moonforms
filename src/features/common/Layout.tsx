@@ -44,7 +44,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
               fontWeight='700'
               fontSize='3xl'
             >
-              Formify
+              Moonforms
             </Text>
           </Link>
           <Spacer />

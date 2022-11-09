@@ -11,7 +11,7 @@ import '@fontsource/poppins/700.css';
 import { AuthProvider } from '../features/users/AuthProvider';
 import { theme } from '../styles/theme';
 
-const polybase = new Polybase({ defaultNamespace: 'Forms-testing' });
+const polybase = new Polybase({ defaultNamespace: 'forms-testing' });
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

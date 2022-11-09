@@ -1,53 +1,145 @@
-import { Box, Button, Container, Icon, Text, VStack } from '@chakra-ui/react';
-import { Formik, useFormikContext } from 'formik';
+import {
+  Box,
+  Button,
+  Container,
+  FormLabel,
+  Icon,
+  Input,
+  Text,
+  Textarea,
+  VStack,
+} from '@chakra-ui/react';
+import { usePolybase } from '@polybase/react';
+import { Form, Formik, useFormikContext } from 'formik';
+import { nanoid } from 'nanoid';
 import { useRouter } from 'next/router';
 import { Plus } from 'phosphor-react';
-import React from 'react';
+import React, { useState } from 'react';
 
-import {
-  initialFormValue,
-  NewFormSchema,
-} from '../../components/FormsPage/Forms/newFormSchema';
+import { initialFormValue } from '../../components/FormsPage/Forms/newFormSchema';
 import QuestionCard from '../../components/FormsPage/Questions/QuestionCard';
 import { Layout } from '../../features/common/Layout';
-import FormDetails from "../../components/FormsPage/Forms/FormDetails";
+import { FormDetails, Question } from '../../features/types';
 
-const SubmitForm = () => {
-  const { submitForm } = useFormikContext()
+const FormDetails = () => {
+  const { handleChange, values } = useFormikContext<FormDetails>();
   return (
-      <Button
-          onClick={async () => { console.log("hello") }}
-          size='md'
-          _hover={{ bg: 'purple.1' }}
-          color='purple.4'
-          bg='purple.05'
-          mt='4'
+    <>
+      <Text
+        fontWeight='500'
+        color='purple.5'
+        mb={1}
+        fontSize='md'
+        as={FormLabel}
       >
-        Create form
-      </Button>
-  )
-}
+        Title
+      </Text>
+
+      <Input
+        id='title'
+        color='purple.4'
+        focusBorderColor='purple.3'
+        borderColor='purple.2'
+        w={{ base: 'full', sm: 'lg', md: 'lg', lg: 'lg' }}
+        placeholder='Untitled form'
+        type='text'
+        value={values.title}
+        onChange={handleChange}
+      />
+      <Text
+        fontWeight='500'
+        color='purple.5'
+        mb={1}
+        fontSize='md'
+        as={FormLabel}
+        mt={2}
+      >
+        Description
+      </Text>
+      <Textarea
+        color='purple.4'
+        focusBorderColor='purple.3'
+        borderColor='purple.2'
+        maxW='xl'
+        name='description'
+        onChange={handleChange}
+        value={values.description}
+        placeholder='Description...'
+        size='md'
+        resize='none'
+      />
+    </>
+  );
+};
 
 const NewForm = () => {
   const router = useRouter();
+  const [formQuestions, setFormQuestions] = useState<{
+    [id: string]: Question;
+  }>({});
+  const db = usePolybase();
+  const formsCollection = db.collection('Form');
+  const questionsCollection = db.collection('Question');
 
-  // const db = usePolybase();
-  // const formsCollection = db.collection('Form');
+  const handleCreateQuestions = async (formId: string) => {
+    const questions = Object.keys(formQuestions);
+    for (let i = 0; i < questions.length; i++) {
+      await questionsCollection.create([]);
+    }
+  };
 
-  const handleCreateForm = async () => {
-    console.log('edldld')
-    // try {
-    //   console.log('submit form');
-    //   // const createdForm = await formsCollection.create([
-    //   //   'test-id',
-    //   //   'new testing',
-    //   //   'description',
-    //   //   'created at',
-    //   // ]);
-    //   // console.log('create form', createdForm);
-    // } catch (e) {
-    //   console.log(`error creating form`, e);
-    // }
+  const handleCreateForm = async (values: FormDetails) => {
+    try {
+      const _values = values;
+      _values.questions = Object.keys(formQuestions).map(
+        (id) => formQuestions[id]
+      );
+
+      const formId = nanoid();
+      const createdForm = await formsCollection.create([
+        formId,
+        _values.title,
+        _values.description,
+        `${Math.floor(Date.now() / 1000)}`,
+      ]);
+
+      console.log('create form', createdForm);
+    } catch (e) {
+      console.log(`error creating form`, e);
+    }
+  };
+
+  const handleQuestionChange = (
+    id: string,
+    changeType: 'title' | 'type' | 'required',
+    value: unknown
+  ) => {
+    setFormQuestions({
+      ...formQuestions,
+      [id]: {
+        id,
+        type:
+          changeType === 'type' ? (value as string) : formQuestions[id].type,
+        title:
+          changeType === 'title' ? (value as string) : formQuestions[id].title,
+        required:
+          changeType === 'required'
+            ? (value as boolean)
+            : formQuestions[id].required,
+      },
+    });
+  };
+
+  const handleNewQuestion = () => {
+    const newQuestions = { ...formQuestions };
+    const questionId = nanoid();
+    newQuestions[questionId] = {
+      id: questionId,
+      type: 'short-text',
+      title: '',
+      required: false,
+    };
+    setFormQuestions(newQuestions);
   };
 
   return (
@@ -89,28 +181,33 @@ const NewForm = () => {
             >
               <Formik
                 initialValues={initialFormValue}
-                validationSchema={NewFormSchema}
-                onSubmit={(values, formikHelpers) => {console.log(values,formikHelpers)}}
+                onSubmit={handleCreateForm}
               >
-                <Box maxW='full'>
-                  <Text fontWeight='500' color='purple.5' mb={1} fontSize='md'>
-                    Title & Description
-                  </Text>
-
-                  <FormDetails/>
-
-                  <Box mt={10} maxW='full'>
+                <Box pb={3} maxW='full'>
+                  <Form>
+                    <FormDetails />
                     <Text
                       fontWeight='500'
                       color='purple.5'
-                      mb={1}
+                      mt={3}
                       fontSize='md'
                     >
                       Questions
+                      {Object.keys(formQuestions).length >= 1 && (
+                        <Text
+                          fontWeight={400}
+                          color='purple.2'
+                          fontSize='xs'
+                          as='span'
+                        >
+                          {' '}
+                          - {Object.keys(formQuestions).length} questions
+                        </Text>
+                      )}
                     </Text>
-
                     <Button
                       leftIcon={<Icon weight='bold' as={Plus} />}
+                      onClick={handleNewQuestion}
                       bg='purple.05'
                       color='purple.3'
                       size='xs'
@@ -118,10 +215,38 @@ const NewForm = () => {
                       Add question
                     </Button>
 
-                    <QuestionCard />
+                    <Box mb={5}>
+                      {Object.keys(formQuestions).length < 1 && (
+                        <Text mt={4}>Add a question to get started</Text>
+                      )}
+                      {Object.keys(formQuestions).length >= 1 &&
+                        Object.keys(formQuestions).map((id) => {
+                          return (
+                            <QuestionCard
+                              key={nanoid()}
+                              changeHandler={handleQuestionChange}
+                              details={{
+                                title: formQuestions[id].title,
+                                id,
+                                type: formQuestions[id].type,
+                                required: formQuestions[id].required,
+                              }}
+                            />
+                          );
+                        })}
+                    </Box>
 
-                    <SubmitForm/>
-                  </Box>
+                    <Button
+                      size='md'
+                      _hover={{ bg: 'purple.1' }}
+                      color='purple.4'
+                      bg='purple.05'
+                      mt='4'
+                      type='submit'
+                    >
+                      Create form
+                    </Button>
+                  </Form>
                 </Box>
               </Formik>
             </VStack>
