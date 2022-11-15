@@ -1,15 +1,16 @@
+import Wallet from 'ethereumjs-wallet';
 import React, { createContext, useCallback, useMemo, useState } from 'react';
 
 export interface AuthContextValue {
-  auth: { account: string; wallet: string } | null;
-  login: (account: string, wallet: string) => Promise<void>;
+  auth: { accountAddress: string; walletAccount: Wallet } | null;
+  login: (accountAddress: string, walletAccount: Wallet) => Promise<void>;
   logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValue>({
   auth: null,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  login: async (account: string, wallet: string) => {},
+  login: async (accountAddress: string, walletAccount: Wallet) => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   logout: async () => {},
 });
@@ -20,9 +21,12 @@ export interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [auth, setAuth] = useState<AuthContextValue['auth']>(null);
-  const login = useCallback(async (account: string, wallet: string) => {
-    setAuth({ account, wallet });
-  }, []);
+  const login = useCallback(
+    async (accountAddress: string, walletAccount: Wallet) => {
+      setAuth({ accountAddress, walletAccount });
+    },
+    []
+  );
 
   const logout = useCallback(async () => {
     setAuth(null);

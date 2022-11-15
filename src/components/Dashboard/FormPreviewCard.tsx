@@ -1,45 +1,99 @@
-import { Box, Button, HStack, Icon, Text, VStack } from '@chakra-ui/react';
-import { LinkSimple, PencilSimple, User } from 'phosphor-react';
+import {
+  Box,
+  Button,
+  HStack,
+  Icon,
+  Spacer,
+  Text,
+  useToast,
+  VStack,
+} from '@chakra-ui/react';
+import { router } from 'next/client';
+import { ArrowUpRight, Cube, LinkSimple, PencilSimple } from 'phosphor-react';
 import React from 'react';
 
-const FormPreviewCard = () => {
+import { FormRecord } from '../../features/types';
+
+interface FormPreviewCardProps {
+  form: FormRecord;
+}
+// Todo: find the responses associated with this form
+const FormPreviewCard = ({ form }: FormPreviewCardProps) => {
+  // const explorerUrl = 'https://explorer.testnet.polybase.xyz/collections/new-forms%2FformTwo';
+  const toast = useToast();
+
+  const copyLink = async () => {
+    const formUrl =
+      process.env.NODE_ENV === 'development'
+        ? `http://localhost:3000/forms/${form.id}`
+        : '';
+    await navigator.clipboard.writeText(formUrl);
+    toast({
+      title: 'Copied form link',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   return (
     <Box
-      maxWidth='3xl'
-      p={2}
+      maxWidth='full'
+      maxH='full'
+      padding={3}
       borderRadius='md'
-      border='1px'
+      border='2px'
       borderColor='purple.1'
     >
       <VStack display='flex' alignItems='left'>
-        <Text pl={3} fontWeight='500' color='purple.5'>
-          Florida web3 convention ticket giveaway
-        </Text>
+        <HStack mb={1} ml={1} display='flex'>
+          <Text
+            fontSize={{ base: 'sm', sm: 'md', md: 'md', lg: 'xl' }}
+            fontWeight='600'
+            color='purple.5'
+          >
+            {form.title}
+          </Text>
+          <Spacer />
+          <Button
+            leftIcon={<Icon weight='bold' as={Cube} />}
+            _hover={{ bg: 'purple.05' }}
+            bg='white'
+            color='purple.3'
+            size='md'
+          >
+            View in explorer
+          </Button>
+        </HStack>
         <HStack display='flex'>
           <Button
-            size='sm'
-            _hover={{ bg: 'purple.05' }}
+            size='md'
+            _hover={{ bg: 'purple.1' }}
             color='purple.4'
-            bg='white'
-            leftIcon={<Icon weight='bold' as={User} />}
+            bg='purple.05'
+            rightIcon={<Icon weight='bold' as={ArrowUpRight} />}
+            onClick={() => {
+              router.push(`/forms/responses/${form.id}`);
+            }}
           >
-            329 responses
+            Responses
           </Button>
           <Button
-            size='sm'
+            size='md'
             _hover={{ bg: 'purple.05' }}
             color='purple.4'
             bg='white'
-            leftIcon={<Icon weight='bold' as={PencilSimple} />}
+            rightIcon={<Icon weight='bold' as={PencilSimple} />}
           >
             Edit
           </Button>
           <Button
-            size='sm'
+            size='md'
             _hover={{ bg: 'purple.05' }}
             color='purple.4'
             bg='white'
-            leftIcon={<Icon weight='bold' as={LinkSimple} />}
+            rightIcon={<Icon weight='bold' as={LinkSimple} />}
+            onClick={copyLink}
           >
             Copy link
           </Button>

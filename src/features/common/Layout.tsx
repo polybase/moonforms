@@ -42,7 +42,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
               cursor='pointer'
               color='purple.5'
               fontWeight='700'
-              fontSize='3xl'
+              fontSize='2xl'
             >
               Moonforms
             </Text>
@@ -70,7 +70,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
                     color='white'
                     rightIcon={<Icon as={CaretDown} />}
                   >
-                    {shortEthAddress(auth.account)}
+                    {shortEthAddress(auth.accountAddress)}
                   </MenuButton>
                   <MenuList bg='white'>
                     <MenuItem
