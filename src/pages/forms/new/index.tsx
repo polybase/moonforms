@@ -97,7 +97,7 @@ const NewForm = () => {
   const toast = useToast();
   const db = usePolybase();
 
-  const formsCollection = db.collection('formTwo');
+  const formsCollection = db.collection('form');
   const questionsCollection = db.collection('question');
 
   const [formId, setFormId] = useState<string>(nanoid());
@@ -119,6 +119,7 @@ const NewForm = () => {
         questions[i].type,
         `${questions[i].required}`,
         questions[i].data,
+        auth.accountAddress
       ]);
     }
   };
@@ -158,6 +159,7 @@ const NewForm = () => {
         _values.title,
         _values.description,
         `${Math.floor(Date.now() / 1000)}`,
+        auth.accountAddress
       ]);
 
       await handleCreateQuestions(values.questions);

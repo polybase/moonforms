@@ -40,7 +40,7 @@ const FormResponsePage = () => {
       .collection<QuestionRecord>('question')
       .get();
     setQuestions(
-      collection.data.filter((q) => q.data.form === (router.query.id as string))
+      collection.data.filter((q) => q.data.formId === (router.query.id as string))
     );
     setIsLoading(false);
   }, [auth, polybase, router.query.id]);
@@ -49,7 +49,7 @@ const FormResponsePage = () => {
     async (formId: string) => {
       if (!auth) throw new Error('You are not authenticated');
       const collection = await polybase
-        .collection<FormRecord>('formTwo')
+        .collection<FormRecord>('form')
         .record(formId)
         .get();
       setFormRecord(collection);
@@ -80,16 +80,16 @@ const FormResponsePage = () => {
     // helpers.resetForm();
   };
 
-  const encryptData = async (data: string): Promise<string> => {
-    const encryptedObject = await EthCrypto.encryptWithPublicKey(
-      formRecord?.data.publickey.replace('0x', '') as string,
-      data
-    );
+  const encryptData = async (data: string) => {
+    // const encryptedObject = await EthCrypto.encryptWithPublicKey(
+    //   formRecord?.data..replace('0x', '') as string,
+    //   data
+    // );
 
     // const decrypted = await EthCrypto.decryptWithPrivateKey(auth?.walletAccount.getPrivateKeyString() as string, EthCrypto.cipher.parse(EthCrypto.cipher.stringify(encryptedObject)));
     // console.log('decrypted', decrypted)
 
-    return EthCrypto.cipher.stringify(encryptedObject);
+    // return EthCrypto.cipher.stringify(encryptedObject);
   };
 
   useEffect(() => {

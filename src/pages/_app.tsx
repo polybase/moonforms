@@ -12,7 +12,7 @@ import '@fontsource/poppins/700.css';
 import { AuthProvider } from '../features/users/AuthProvider';
 import { theme } from '../styles/theme';
 
-const polybase = new Polybase({ defaultNamespace: 'new-forms' });
+const polybase = new Polybase({ defaultNamespace: 'formsTesting_3' });
 const AppContainer = styled.div`
   font-family: 'Poppins', sans-serif;
 `;

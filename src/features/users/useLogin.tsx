@@ -22,11 +22,14 @@ export function useLogin() {
       const privateKey = privateKeyBuff.toString('hex');
       const encryptedPrivateKey = await eth.encrypt(privateKey, accountAddress);
 
-      await userCollection.create([accountAddress, encryptedPrivateKey]);
+      const publicKeyBuff = wallet.getPublicKey();
+      const publicKey = publicKeyBuff.toString('hex');
+
+      await userCollection.create([accountAddress, encryptedPrivateKey, publicKey]);
       return wallet;
     } else {
       const privateKey = await eth.decrypt(
-        user.data.privatekey,
+        user.data.encryptedPrivateKey,
         accountAddress
       );
       return Wallet.fromPrivateKey(Buffer.from(privateKey, 'hex'));

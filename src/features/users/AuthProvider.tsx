@@ -1,3 +1,6 @@
+/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-function */
+
 import Wallet from 'ethereumjs-wallet';
 import React, { createContext, useCallback, useMemo, useState } from 'react';
 
@@ -9,9 +12,7 @@ export interface AuthContextValue {
 
 export const AuthContext = createContext<AuthContextValue>({
   auth: null,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   login: async (accountAddress: string, walletAccount: Wallet) => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   logout: async () => {},
 });
 

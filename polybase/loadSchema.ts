@@ -3,76 +3,78 @@ import { Polybase } from '@polybase/client'
 const schema = `
 collection user {
   id: string;
-  privatekey: string;
-  
-  @index(id, privatekey);
+  encryptedPrivateKey: string;
+  publicKey: string;
+    
+  @index(id, encryptedPrivateKey, publicKey);
 
-  constructor (id: string, privatekey: string) {
+  constructor (id: string, privateKey: string, publicKey: string) {
     this.id = id;
-    this.privatekey = privatekey;
+    this.encryptedPrivateKey = privateKey;
+    this.publicKey = publicKey;
   }
 }
 
-collection formTwo {
+collection form {
   id: string;
   title: string;
   description: string;
-  publickey: string;
-  createdat: string;
+  createdBy: string;
+  createdAt: string;
   
-  @index(id, title, description, publickey, createdat);
+  @index(id, title, description, createdBy, createdAt);
   
-  constructor (id: string, title: string, description: string, createdat: string) {
+  constructor (id: string, title: string, description: string, createdAt: string, createdBy: string) {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.createdat = createdat;
-    this.publickey = ctx.publicKey;
+    this.createdAt = createdAt;
+    this.createdBy = createdBy;
   }
 }
 
 collection question {
   id: string;
-  form: string;
+  formId: string;
   title: string;
   type: string;
-  creator: string;
+  createdBy: string;
   required: string;
   data?: string;
   
-  @index(id, form, title, type, required);
-  constructor (id: string, form: string, title: string, type: string, required: string, data: string) {
+  @index(id, form, title, type, required, createdBy);
+  
+  constructor (id: string, form: string, title: string, type: string, required: string, data: string, createdBy: string) {
     this.id = id;
-    this.form = form;
+    this.formId = form;
     this.type = type;
     this.title = title;
     this.required = required;
     this.data = data;
-    this.creator = ctx.publicKey;
+    this.createdBy = createdBy;
   }
 }
 
 collection response {
     id: string;
-    form: string;
-    data: string;
-    publickey: string;
-    createdat: string;
+    formId: string;
+    encryptedData: string;
+    createdAt: string;
     
-    @index(id, form, publickey, createdat);
+    @index(id, formId, createdAt);
     
     constructor(id: string, form: string, createdAt: string, data: string) {
       this.id = id;
-      this.form = form;
-      this.data = data;
-      this.createdat = createdAt;
-      this.publickey = ctx.publicKey;
+      this.formId = form;
+      this.encryptedData = data;
+      this.createdAt = createdAt;
     }
   }
 `
+
 async function loadSchema () {
   const db = new Polybase()
-  await db.applySchema(schema, 'new-forms');
+  await db.applySchema(schema, 'formsTesting_3');
   return 'Schema loaded';
 }
 

@@ -22,14 +22,14 @@ const Dashboard = () => {
   const getUserForms = useCallback(async () => {
     if (!auth) throw new Error('You are not authenticated');
 
-    const collection = await polybase.collection<FormRecord>('formTwo').get();
+    const collection = await polybase.collection<FormRecord>('form').get();
     setForms(collection);
     setIsLoading(false);
   }, [auth, polybase]);
 
   const createdUserForms = map(
     forms?.data.filter(
-      (r) => r.data.publickey === auth?.walletAccount.getPublicKeyString()
+      (r) => r.data.createdBy === auth?.accountAddress
     ),
     ({ data }) => {
       return <FormPreviewCard form={data} key={nanoid()} />;

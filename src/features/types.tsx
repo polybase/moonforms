@@ -1,20 +1,21 @@
 // Represents a record from the User collection
 export interface UserRecord {
   id: string;
-  privatekey: string;
+  encryptedPrivateKey: string;
+  publicKey: string;
 }
 // Represents a record from the Form collection
 export interface FormRecord {
   id: string;
   title: string;
   description: string;
-  publickey: string;
-  createdat: string;
+  createdBy: string;
+  createdAt: string;
 }
 // Represents a record from the Question collection
 export interface QuestionRecord {
   id: string;
-  form: string;
+  formId: string;
   title: string;
   type:
     | 'date'
@@ -23,7 +24,7 @@ export interface QuestionRecord {
     | 'short-text'
     | 'multiple-choice'
     | 'linear-scale';
-  creator: string;
+  createdBy: string;
   required: string;
   data: string;
 }
