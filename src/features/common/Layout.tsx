@@ -50,6 +50,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
               bg='transparent'
               bgGradient='radial(78.9% 78.52% at 24.68% 21.48%, rgba(73, 70, 182, 0.6) 0%, rgba(107, 105, 207, 0.26) 100%)'
               onClick={login}
+              p={7}
               size={{ base: 'sm', lg: 'lg' }}
               fontSize={{ base: 'sm', lg: 'xl' }}
             >
@@ -67,6 +68,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
                   bg='transparent'
                   bgGradient='radial(78.9% 78.52% at 24.68% 21.48%, rgba(73, 70, 182, 0.6) 0%, rgba(107, 105, 207, 0.26) 100%)'
                   as={Button}
+                  p={7}
                   rightIcon={<Icon as={CaretDown} />}
                 >
                   {shortEthAddress(auth.accountAddress)}

@@ -53,7 +53,7 @@ const Dashboard = () => {
             </Text>
             <Button
               onClick={async () => {
-                await router.push('/forms/new');
+                router.push('/forms/new');
                 setIsLoading(true);
               }}
               size='lg'

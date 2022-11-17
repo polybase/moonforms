@@ -6,7 +6,6 @@ import {
   symmetricEncryptToHex,
   symmetricGenerateKey,
 } from '@polybase/util';
-import { Promise } from 'es6-promise';
 import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import { map } from 'lodash';
 import { nanoid } from 'nanoid';

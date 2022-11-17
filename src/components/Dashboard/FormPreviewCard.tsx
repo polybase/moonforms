@@ -8,7 +8,7 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import { router } from 'next/client';
+import { useRouter } from 'next/router';
 import { ArrowUpRight, Cube, LinkSimple, PencilSimple } from 'phosphor-react';
 import React from 'react';
 
@@ -17,11 +17,10 @@ import { FormRecord } from '../../features/types';
 interface FormPreviewCardProps {
   form: FormRecord;
 }
-// Todo: find the responses associated with this form
 const FormPreviewCard = ({ form }: FormPreviewCardProps) => {
   // const explorerUrl = 'https://explorer.testnet.polybase.xyz/collections/new-forms%2FformTwo';
   const toast = useToast();
-
+  const router = useRouter();
   const copyLink = async () => {
     const formUrl =
       process.env.NODE_ENV === 'development'

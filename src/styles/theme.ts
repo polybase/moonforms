@@ -37,7 +37,7 @@ export const theme = extendTheme({
   },
   fonts: {
     // heading: `'Open Sans', sans-serif`,
-    body: `'Open Sans', sans-serif`,
+    body: `"IBM Plex Sans", sans-serif;`,
   },
   // 'Poppins', sans-serif
 });

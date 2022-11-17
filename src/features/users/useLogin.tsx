@@ -1,5 +1,4 @@
 import * as eth from '@polybase/eth';
-import { ethPersonalSign } from '@polybase/eth';
 import { usePolybase } from '@polybase/react';
 import Wallet from 'ethereumjs-wallet';
 
@@ -43,7 +42,7 @@ export function useLogin() {
     db.signer(async (data) => {
       return {
         h: 'eth-personal-sign',
-        sig: ethPersonalSign(walletAccount.getPrivateKey(), data),
+        sig: eth.ethPersonalSign(walletAccount.getPrivateKey(), data),
       };
     });
   };
