@@ -8,10 +8,10 @@ collection user {
     
   @index(id, encryptedPrivateKey, publicKey);
 
-  constructor (id: string, privateKey: string, publicKey: string) {
+  constructor (id: string, privateKey: string) {
     this.id = id;
     this.encryptedPrivateKey = privateKey;
-    this.publicKey = publicKey;
+    this.publicKey = ctx.publicKey;
   }
 }
 
@@ -61,7 +61,7 @@ collection response {
     encryptedData: string;
     createdAt: string;
     
-    @index(id, formId, createdAt);
+    @index(id, formId, createdAt, encryptedData);
     
     constructor(id: string, form: string, createdAt: string, data: string) {
       this.id = id;
@@ -69,7 +69,23 @@ collection response {
       this.encryptedData = data;
       this.createdAt = createdAt;
     }
-  }
+}
+
+collection responseUser {
+    id: string;
+    userId: string;
+    responseId: string;
+    encryptedEncryptionKey: string;
+    
+    @index(id, userId, responseId, encryptedEncryptionKey);
+    
+    constructor(id: string, userId: string, responseId: string, encryptedEncryptionKey: string) {
+      this.id = id;
+      this.userId = userId;
+      this.responseId = responseId;
+      this.encryptedEncryptionKey = encryptedEncryptionKey;
+    }
+}
 `
 
 async function loadSchema () {

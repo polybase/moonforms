@@ -119,7 +119,7 @@ const NewForm = () => {
         questions[i].type,
         `${questions[i].required}`,
         questions[i].data,
-        auth.accountAddress
+        auth.accountAddress,
       ]);
     }
   };
@@ -159,7 +159,7 @@ const NewForm = () => {
         _values.title,
         _values.description,
         `${Math.floor(Date.now() / 1000)}`,
-        auth.accountAddress
+        auth.accountAddress,
       ]);
 
       await handleCreateQuestions(values.questions);

@@ -19,6 +19,7 @@
     "@polybase/client": "^0.3.6",
     "@polybase/eth": "^0.3.4",
     "@polybase/react": "^0.3.6",
+    "@polybase/util": "^0.3.7",
     "@types/lodash": "^4.14.188",
     "@types/nanoid": "^3.0.0",
     "eth-crypto": "^2.4.0",

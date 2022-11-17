@@ -28,9 +28,7 @@ const Dashboard = () => {
   }, [auth, polybase]);
 
   const createdUserForms = map(
-    forms?.data.filter(
-      (r) => r.data.createdBy === auth?.accountAddress
-    ),
+    forms?.data.filter((r) => r.data.createdBy === auth?.accountAddress),
     ({ data }) => {
       return <FormPreviewCard form={data} key={nanoid()} />;
     }

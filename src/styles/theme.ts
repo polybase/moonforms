@@ -1,9 +1,7 @@
-import { extendTheme } from '@chakra-ui/react';
-const config = {
-  initialColorMode: 'light',
-  useSystemColorMode: false,
-  fonts: {
-    body: `'Poppins', sans-serif`,
+import { extendTheme, StyleFunctionProps } from '@chakra-ui/react';
+const colorsConfig = {
+  yellow: {
+    5: '#FDFFAF',
   },
   green: {
     '05': '#C0F7EA',
@@ -27,4 +25,19 @@ const config = {
   },
 };
 
-export const theme = extendTheme({ colors: config });
+export const theme = extendTheme({
+  colors: colorsConfig,
+  styles: {
+    global: (props: StyleFunctionProps) => ({
+      body: {
+        color: 'default',
+        bg: '#18191A',
+      },
+    }),
+  },
+  fonts: {
+    // heading: `'Open Sans', sans-serif`,
+    body: `'Open Sans', sans-serif`,
+  },
+  // 'Poppins', sans-serif
+});

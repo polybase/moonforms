@@ -1,18 +1,6 @@
-import {
-  Box,
-  Button,
-  Container,
-  HStack,
-  Image,
-  Link,
-  Spacer,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Stack, Spacer, Image, Button, Container, Text, VStack } from '@chakra-ui/react';
 // import { useDocument, usePolybase } from '@polybase/react';
 import type { NextPage } from 'next';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -34,99 +22,145 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <VStack p={5} spacing={{ base: 10, md: 44, lg: 28 }}>
-        <Container maxWidth='container.xl' p={4}>
+      <VStack p={5} spacing={{ base: 10, md: 44, lg: 64 }}>
+        <Container maxHeight={'container.xl'} maxWidth='container.xl' mt={36} p={4}>
           <Box
             alignItems='center'
             textAlign='center'
             display='flex'
             flexDirection='column'
-            mt={12}
           >
-            <Text color='purple.5' fontWeight='700' fontSize='3xl'>
-              Create forms and collect data with{' '}
-              <Text
-                as='span'
-                bgGradient='linear(to-l, #7928CA, #FF0080)'
-                bgClip='text'
-              >
-                decentralized
-              </Text>{' '}
-              forms
+            <Text color='yellow.5' fontWeight='700' fontSize='6xl'>
+              Decentralized forms and surveys
             </Text>
-            <HStack mt={4} alignContent='center'>
-              <Text color='purple.3'>Powered by </Text>
-              <Image src='/logo.svg' alt='polybase logo' />
-              <Text color='purple.3'>
-                <NextLink href='https://www.polybase.xyz/'>
-                  <Link as='span' fontWeight='600'>
-                    Polybase
-                  </Link>
-                </NextLink>
+            <Box maxW='container.md'>
+              <Text color='white' fontSize='3xl'>
+                Create forms, share links and view responses (even if there’s a
+                nuclear war)
               </Text>
-            </HStack>
-            {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+            </Box>
             <Button
               onClick={handleGetStartedClick}
-              mt={10}
-              color='white'
+              p={7}
+              color='Black'
+              mt={20}
               _hover={{ bg: 'purple.5' }}
-              bg='purple.4'
+              bg='white'
+              borderRadius='lg'
             >
-              Get started for free
+              Create a Moonform
             </Button>
           </Box>
         </Container>
-        <Container maxWidth='container.lg'>
-          <Stack direction={['column', 'row']} spacing='24px'>
-            <Box maxWidth='xs'>
-              <VStack textAlign='left'>
-                <Image src='/thumbs_up.svg' alt='polybase logo' />
-                <Box>
-                  <Text color='purple.4' fontWeight={700} fontSize='xl'>
-                    Easy to use
-                  </Text>
-                  <Text color='purple.3' fontSize='md'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </Text>
-                </Box>
-              </VStack>
-            </Box>
-            <Spacer />
-            <Box maxWidth='xs'>
-              <VStack>
-                <Image src='/data.svg' alt='polybase logo' />
-                <Box>
-                  <Text color='purple.4' fontWeight={700} fontSize='xl'>
-                    Export your data
-                  </Text>
-                  <Text color='purple.3' fontSize='md'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </Text>
-                </Box>
-              </VStack>
-            </Box>
-            <Spacer />
-            <Box maxWidth='xs'>
-              <VStack>
-                <Image src='/book.svg' alt='polybase logo' />
-                <Box>
-                  <Text color='purple.4' fontWeight={700} fontSize='xl'>
-                    Open-source
-                  </Text>
-                  <Text color='purple.3' fontSize='md'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </Text>
-                </Box>
-              </VStack>
-            </Box>
-          </Stack>
+        <Container maxWidth='container.xl'>
+          <Box
+            alignItems='center'
+            textAlign='center'
+            display='flex'
+            flexDirection='column'
+          >
+            <VStack spacing={{ base: 28}}>
+              <Text color='yellow.5' fontWeight='700' fontSize='5xl'>
+                Why moonforms?
+              </Text>
+              <Box>
+                <Text mt={8} color='purple.4' fontWeight='500' fontSize='4xl'>
+                  Cryptographically guaranteed privacy
+                </Text>
+                <Stack mt={14} direction={['column', 'row']} spacing='24px'>
+                  <Box maxWidth='xs'>
+                    <VStack>
+                      <Image src='/thumbs_up.svg' alt='polybase logo' />
+                      <Box>
+                        <Text color='white' textAlign={'justify'} fontSize='xl'>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                          do eiusmod tempor incididunt ut labore et dolore magna
+                          aliqua.
+                        </Text>
+                      </Box>
+                    </VStack>
+                  </Box>
+                  <Spacer />
+                  <Box maxWidth='xs'>
+                    <VStack textAlign='left'>
+                      <Image src='/data.svg' alt='polybase logo' />
+                      <Box>
+                        <Text color='white' textAlign={'justify'} fontSize='xl'>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                          do eiusmod tempor incididunt ut labore et dolore magna
+                          aliqua.
+                        </Text>
+                      </Box>
+                    </VStack>
+                  </Box>
+                </Stack>
+              </Box>
+              <Box >
+                <Text mt={8} color='white' fontWeight='500' fontSize='4xl'>
+                  Censorship-resistant
+                </Text>
+                <Stack mt={14} direction={['column', 'row']} spacing='24px'>
+                  <Box maxWidth='xs'>
+                    <VStack textAlign='left'>
+                      <Image src='/thumbs_up.svg' alt='polybase logo' />
+                      <Box>
+                        <Text color='purple.3' fontSize='md'>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                          do eiusmod tempor incididunt ut labore et dolore magna
+                          aliqua.
+                        </Text>
+                      </Box>
+                    </VStack>
+                  </Box>
+                  <Spacer />
+                  <Box maxWidth='xs'>
+                    <VStack>
+                      <Image src='/data.svg' alt='polybase logo' />
+                      <Box>
+                        <Text color='purple.3' fontSize='md'>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                          do eiusmod tempor incididunt ut labore et dolore magna
+                          aliqua.
+                        </Text>
+                      </Box>
+                    </VStack>
+                  </Box>
+                </Stack>
+              </Box>
+              <Box >
+                <Text mt={8} color='white' fontWeight='500' fontSize='4xl'>
+                  Linked to wallets and open source
+                </Text>
+                <Stack mt={14} direction={['column', 'row']} spacing='24px'>
+                  <Box maxWidth='xs'>
+                    <VStack textAlign='left'>
+                      <Image src='/thumbs_up.svg' alt='polybase logo' />
+                      <Box>
+                        <Text color='purple.3' fontSize='md'>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                          do eiusmod tempor incididunt ut labore et dolore magna
+                          aliqua.
+                        </Text>
+                      </Box>
+                    </VStack>
+                  </Box>
+                  <Spacer />
+                  <Box maxWidth='xs'>
+                    <VStack>
+                      <Image src='/data.svg' alt='polybase logo' />
+                      <Box>
+                        <Text color='purple.3' fontSize='md'>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                          do eiusmod tempor incididunt ut labore et dolore magna
+                          aliqua.
+                        </Text>
+                      </Box>
+                    </VStack>
+                  </Box>
+                </Stack>
+              </Box>
+            </VStack>
+          </Box>
         </Container>
       </VStack>
     </Layout>

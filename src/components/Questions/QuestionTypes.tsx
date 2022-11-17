@@ -12,7 +12,12 @@ import {
 import { useFormikContext } from 'formik';
 import React, { ReactElement, useState } from 'react';
 
-import { FormDetails, CheckboxOption, LinearScaleConfig, MultipleChoiceOption } from '../../features/types';
+import {
+  CheckboxOption,
+  FormDetails,
+  LinearScaleConfig,
+  MultipleChoiceOption,
+} from '../../features/types';
 
 interface QuestionTypeProps {
   disabled: boolean;

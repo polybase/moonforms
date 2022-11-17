@@ -1,8 +1,23 @@
-import { Box, Input, VStack, Radio, RadioGroup, Stack, HStack, Text, Checkbox } from '@chakra-ui/react';
+import {
+  Box,
+  Checkbox,
+  HStack,
+  Input,
+  Radio,
+  RadioGroup,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import { useFormikContext } from 'formik';
-import React, {ReactElement, useState} from 'react';
+import React, { ReactElement, useState } from 'react';
 
-import {CheckboxOption, MultipleChoiceOption, QuestionRecord, ResponseDetails} from '../../features/types';
+import {
+  CheckboxOption,
+  MultipleChoiceOption,
+  QuestionRecord,
+  ResponseDetails,
+} from '../../features/types';
 
 interface AnswerTypeProps {
   questionIndex: number;
@@ -12,13 +27,12 @@ interface AnswerTypeProps {
 export function ShortTextAnswer({
   questionIndex,
 }: AnswerTypeProps): ReactElement {
-
   const [textResponse, setTextResponse] = useState<string>('');
   const formikCtx = useFormikContext<ResponseDetails>();
 
   const updateAnswer = () => {
     formikCtx.setFieldValue(`answers.${questionIndex}.data`, textResponse);
-  }
+  };
   return (
     <Input
       onChange={(e) => {
@@ -33,13 +47,16 @@ export function ShortTextAnswer({
   );
 }
 
-export function EmailAnswer({ question, questionIndex }: AnswerTypeProps): ReactElement {
+export function EmailAnswer({
+  question,
+  questionIndex,
+}: AnswerTypeProps): ReactElement {
   const [emailResponse, setEmailResponse] = useState<string>('');
   const formikCtx = useFormikContext<ResponseDetails>();
 
   const updateAnswer = () => {
     formikCtx.setFieldValue(`answers.${questionIndex}.data`, emailResponse);
-  }
+  };
   return (
     <Input
       onChange={(e) => {
@@ -60,7 +77,7 @@ export function DateAnswer({ questionIndex }: AnswerTypeProps): ReactElement {
 
   const updateAnswer = () => {
     formikCtx.setFieldValue(`answers.${questionIndex}.data`, dateResponse);
-  }
+  };
   return (
     <Input
       onChange={(e) => {
@@ -78,7 +95,7 @@ export function CheckboxAnswer({
   question,
   questionIndex,
 }: AnswerTypeProps): ReactElement {
-  const checkBoxQuestions = JSON.parse(question.data) as CheckboxOption[]
+  const checkBoxQuestions = JSON.parse(question.data) as CheckboxOption[];
   return (
     <Box maxW='2xl' p={2}>
       <VStack display='flex' alignItems='start' w='full'>
@@ -86,7 +103,7 @@ export function CheckboxAnswer({
           {checkBoxQuestions.map((option, index) => {
             return (
               <HStack mt={2} key={index}>
-                <Checkbox colorScheme='purple' size='lg'/>
+                <Checkbox colorScheme='purple' size='lg' />
                 <Text>{option.title}</Text>
               </HStack>
             );
@@ -101,7 +118,9 @@ export function MultipleChoiceAnswer({
   question,
   questionIndex,
 }: AnswerTypeProps): ReactElement {
-  const multipleChoiceOptions = JSON.parse(question.data) as MultipleChoiceOption[]
+  const multipleChoiceOptions = JSON.parse(
+    question.data
+  ) as MultipleChoiceOption[];
 
   return (
     <Box maxW='2xl' p={2}>
@@ -110,7 +129,10 @@ export function MultipleChoiceAnswer({
           <RadioGroup>
             <Stack direction='column'>
               {multipleChoiceOptions.map((option, index) => {
-                return (<Radio key={index} value={option.title}>{option.title}</Radio>
+                return (
+                  <Radio key={index} value={option.title}>
+                    {option.title}
+                  </Radio>
                 );
               })}
             </Stack>
