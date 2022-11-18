@@ -49,7 +49,7 @@ const Home: NextPage = () => {
                 Decentralized forms and surveys
               </Text>
               <Box maxW='container.md'>
-                <Text color='white' fontSize={{ base: 'xl', lg: '3xl' }}>
+                <Text color='gray.200' fontSize={{ base: 'xl', lg: '3xl' }}>
                   Create forms, share links and view responses (even if there’s
                   a nuclear war)
                 </Text>

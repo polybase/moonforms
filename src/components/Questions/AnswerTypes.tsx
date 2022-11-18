@@ -39,7 +39,8 @@ export function ShortTextAnswer({
         setTextResponse(e.target.value);
         updateAnswer();
       }}
-      _placeholder={{ color: 'purple.2' }}
+      _placeholder={{ color: 'gray.400' }}
+      color={'purple.3'}
       variant='flushed'
       placeholder='Your answer'
       type='text'
@@ -63,7 +64,8 @@ export function EmailAnswer({
         setEmailResponse(e.target.value);
         updateAnswer();
       }}
-      _placeholder={{ color: 'purple.6' }}
+      _placeholder={{ color: 'gray.400' }}
+      color={'purple.3'}
       variant='flushed'
       placeholder='Your email'
       type='email'
@@ -84,7 +86,8 @@ export function DateAnswer({ questionIndex }: AnswerTypeProps): ReactElement {
         setDateResponse(e.target.value);
         updateAnswer();
       }}
-      _placeholder={{ color: 'purple.6' }}
+      _placeholder={{ color: 'gray.400' }}
+      color={'purple.3'}
       variant='flushed'
       type='datetime-local'
     />
@@ -104,7 +107,7 @@ export function CheckboxAnswer({
             return (
               <HStack mt={2} key={index}>
                 <Checkbox colorScheme='purple' size='lg' />
-                <Text>{option.title}</Text>
+                <Text color='white' fontSize={'lg'}>{option.title}</Text>
               </HStack>
             );
           })}
@@ -131,7 +134,7 @@ export function MultipleChoiceAnswer({
               {multipleChoiceOptions.map((option, index) => {
                 return (
                   <Radio key={index} value={option.title}>
-                    {option.title}
+                    <Text color={"white"} fontSize={'lg'}>{option.title}</Text>
                   </Radio>
                 );
               })}
@@ -163,7 +166,7 @@ export function LinearScaleAnswer({
     <Box maxW='2xl' borderRadius='md' border='1px' borderColor='purple.1' p={5}>
       <VStack display='flex' alignItems='start' w='full'>
         <Box w='full'>
-          checkboxes
+          Linear Scale Answer
           {/*{checkboxOptions.map((option, index) => {*/}
           {/*  return (*/}
           {/*    <HStack mt={2} key={index}>*/}

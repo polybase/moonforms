@@ -1,11 +1,7 @@
 import { Box, Button, Container, Text, VStack } from '@chakra-ui/react';
+import EthCrypto from 'eth-crypto';
 import { CollectionRecordResponse } from '@polybase/client';
 import { usePolybase } from '@polybase/react';
-import {
-  asymmetricEncryptToHex,
-  symmetricEncryptToHex,
-  symmetricGenerateKey,
-} from '@polybase/util';
 import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import { map } from 'lodash';
 import { nanoid } from 'nanoid';
@@ -75,30 +71,31 @@ const FormResponsePage = () => {
     if (!auth || !authorizedUsers) throw new Error('You are not authenticated');
 
     setFormSubmitting(true);
+
     const responseId = nanoid();
     const _values = values;
-    const symmetricKey = await symmetricGenerateKey();
-
-    const symmetricEncryptedStr = await symmetricEncryptToHex(
-      symmetricKey,
-      JSON.stringify(_values.answers)
-    );
 
     _values.id = responseId;
     _values.form = formId;
+
+    const symmetricKey = EthCrypto.createIdentity();
+
+    const encryptedResponse = await EthCrypto.encryptWithPublicKey(
+      symmetricKey.publicKey,
+      JSON.stringify(_values.answers)
+    );
 
     await responseCollection.create([
       responseId,
       formId,
       `${Math.floor(Date.now() / 1000)}`,
-      symmetricEncryptedStr,
+      EthCrypto.cipher.stringify(encryptedResponse),
     ]);
 
     const createdUserResponses = authorizedUsers.map(async (user) => {
       const { id: userId, publicKey } = user.data;
 
-      console.log(`user: ${userId}, pk: ${publicKey}`);
-      const encryptedSymmetricKeyWithUsersPublicKey = asymmetricEncryptToHex(
+      const encryptedSymmetricKeyWithUsersPublicKey = await EthCrypto.encryptWithPublicKey(
         publicKey.replace('0x', ''),
         JSON.stringify(symmetricKey)
       );
@@ -107,7 +104,7 @@ const FormResponsePage = () => {
         nanoid(),
         userId,
         responseId,
-        encryptedSymmetricKeyWithUsersPublicKey,
+        EthCrypto.cipher.stringify(encryptedSymmetricKeyWithUsersPublicKey),
       ]);
     });
 
@@ -131,12 +128,10 @@ const FormResponsePage = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    // if (!auth) {
-    //   router.push('/');
-    //   return;
-    // }
     setFormId(router.query.id as string);
+
     getCollections(formId).catch(() => null);
+
     setIsLoading(false);
   }, [getCollections, router, auth, formId, setIsLoading]);
   return (
@@ -152,13 +147,13 @@ const FormResponsePage = () => {
             w='full'
             borderRadius='md'
             maxWidth='container.lg'
-            bg='purple.05'
-            p={5}
+            bgGradient={'radial-gradient(78.9% 78.52% at 24.68% 21.48%, #2C2E30 0%, #1E2124 100%)'}
+            p={8}
           >
-            <Text color='purple.5' fontWeight={600} fontSize='4xl'>
+            <Text color='purple.1' fontWeight={700} fontSize={{base: '2xl', lg: '5xl'}}>
               {formRecord?.data.title}
             </Text>
-            <Text color='purple.4' as='p' fontSize='md'>
+            <Text color='gray.300' as='p' fontSize='md'>
               {formRecord?.data.description}
             </Text>
           </Box>
@@ -204,6 +199,12 @@ const FormResponsePage = () => {
                 </Form>
               )}
             </Formik>
+          </Box>
+          <Box pb={14} display={'flex'} alignItems={'center'} alignContent={'center'} justifyContent={'center'} mt={20} w={'full'}>
+            <VStack>
+              <Text mt={5} color={'gray.500'}>The content of this response is encrypted and can only be viewed by you and the forms owner</Text>
+              <Text  color={'gray.600'} fontWeight={700}> Powered by Polybase</Text>
+            </VStack>
           </Box>
         </VStack>
       </Container>

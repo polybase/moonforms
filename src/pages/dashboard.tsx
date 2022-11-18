@@ -48,7 +48,7 @@ const Dashboard = () => {
       <Container maxWidth='container.lg'>
         <VStack display='flex' alignItems='left'>
           <Box display='flex' alignItems='start' flexDirection='column'>
-            <Text color='purple.3' fontSize='md' fontWeight={600}>
+            <Text color='white' fontSize='lg' fontWeight={600}>
               Your forms
             </Text>
             <Button
@@ -57,9 +57,9 @@ const Dashboard = () => {
                 setIsLoading(true);
               }}
               size='lg'
-              _hover={{ bg: 'purple.3' }}
-              color='white'
-              bg='purple.2'
+              _hover={{ bg: 'gray.300' }}
+              color='dark.1'
+              bg='white'
               mt='4'
             >
               New form

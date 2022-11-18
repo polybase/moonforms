@@ -1,5 +1,8 @@
 import { extendTheme, StyleFunctionProps } from '@chakra-ui/react';
 const colorsConfig = {
+  dark: {
+    1: '#1F2122',
+  },
   yellow: {
     5: '#FDFFAF',
   },

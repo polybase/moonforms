@@ -20,7 +20,7 @@ import {
   FormikHelpers,
   useFormikContext,
 } from 'formik';
-import { map } from 'lodash';
+import {map, set} from 'lodash';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/router';
 import { ArrowUpRight, Plus } from 'phosphor-react';
@@ -44,9 +44,9 @@ const FormDetails = () => {
     <>
       <Text
         fontWeight='600'
-        color='purple.5'
+        color='purple.05'
         mb={1}
-        fontSize='lg'
+        fontSize='xl'
         as={FormLabel}
       >
         Title
@@ -54,10 +54,11 @@ const FormDetails = () => {
 
       <Input
         id='title'
-        color='purple.4'
+        color='white'
         focusBorderColor='purple.3'
-        borderColor='purple.2'
+        borderColor='purple.3'
         fontSize='lg'
+        p={6}
         w={{ base: 'full', sm: 'lg', md: 'lg', lg: 'lg' }}
         placeholder='Untitled form'
         type='text'
@@ -66,20 +67,21 @@ const FormDetails = () => {
       />
       <Text
         fontWeight='600'
-        color='purple.5'
+        color='purple.05'
         mb={1}
-        fontSize='lg'
+        fontSize='xl'
         as={FormLabel}
-        mt={2}
+        mt={5}
       >
         Description
       </Text>
       <Textarea
-        color='purple.4'
-        focusBorderColor='purple.3'
-        borderColor='purple.2'
-        maxW='xl'
+        px={6}
         fontSize='lg'
+        color='white'
+        focusBorderColor='purple.3'
+        borderColor='purple.3'
+        maxW='xl'
         name='description'
         onChange={handleChange}
         value={values.description}
@@ -100,6 +102,7 @@ const NewForm = () => {
   const formsCollection = db.collection('form');
   const questionsCollection = db.collection('question');
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [formId, setFormId] = useState<string>(nanoid());
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [alertDetails, setAlertDetails] = useState<AlertDetails>({
@@ -190,16 +193,19 @@ const NewForm = () => {
   };
 
   useEffect(() => {
+    setLoading(true)
     if (!auth) {
       router.push('/');
+      return;
     }
+    setLoading(false)
   }, [auth, router]);
   return (
-    <Layout>
+    <Layout isLoading={loading} >
       <Container maxWidth='container.lg'>
         <VStack
           display='flex'
-          maxW='3xl'
+          maxW='full'
           alignItems={{
             base: 'left',
             sm: 'center',
@@ -218,7 +224,7 @@ const NewForm = () => {
                 await router.push('/dashboard');
               }}
               cursor='pointer'
-              color='purple.3'
+              color='white'
               fontSize='md'
               fontWeight={500}
             >
@@ -229,7 +235,7 @@ const NewForm = () => {
               w='full'
               experimental_spaceY={8}
               display='flex'
-              alignItems='left'
+              alignItems='center'
             >
               {showAlert && (
                 <Fade in={showAlert} unmountOnExit={true}>
@@ -266,15 +272,16 @@ const NewForm = () => {
                 onSubmit={handleSubmitForm}
               >
                 {({ values }) => (
-                  <Box pb={3} maxW='full'>
+                  <Box pb={3} w={'full'}           display='flex'
+                       alignItems='center'>
                     <Form>
                       <FormDetails />
-                      <Box mb={5}>
+                      <Box mt={10} mb={5}>
                         <Text
                           fontWeight='600'
-                          color='purple.5'
+                          color='white'
                           mt={3}
-                          fontSize='lg'
+                          fontSize='xl'
                         >
                           Questions
                         </Text>
@@ -292,8 +299,8 @@ const NewForm = () => {
                                     data: '',
                                   });
                                 }}
-                                bg='purple.05'
-                                color='purple.3'
+                                bgGradient={'radial-gradient(78.9% 78.52% at 24.68% 21.48%, #2C2E30 0%, #1E2124 100%)'}
+                                color='purple.05'
                                 size='sm'
                               >
                                 Add question

@@ -39,26 +39,27 @@ const FormPreviewCard = ({ form }: FormPreviewCardProps) => {
     <Box
       maxWidth='full'
       maxH='full'
-      padding={3}
-      borderRadius='md'
-      border='2px'
-      borderColor='purple.1'
+      padding={7}
+      borderRadius={'md'}
+      border='1px'
+      borderColor='rgb(255,255,255, 0.1)'
+      bg={'dark.1'}
     >
       <VStack display='flex' alignItems='left'>
         <HStack mb={1} ml={1} display='flex'>
           <Text
-            fontSize={{ base: 'sm', sm: 'md', md: 'md', lg: 'xl' }}
-            fontWeight='600'
-            color='purple.5'
+            fontSize={{ base: 'sm', md: 'md', lg: '2xl' }}
+            fontWeight='700'
+            color='white'
           >
             {form.title}
           </Text>
           <Spacer />
           <Button
             leftIcon={<Icon weight='bold' as={Cube} />}
-            _hover={{ bg: 'purple.05' }}
-            bg='white'
-            color='purple.3'
+            _hover={{ bg: 'rgb(255,255,255, 0.14)' }}
+            bg='transparent'
+            color='purple.05'
             size='md'
           >
             View in explorer
@@ -67,9 +68,9 @@ const FormPreviewCard = ({ form }: FormPreviewCardProps) => {
         <HStack display='flex'>
           <Button
             size='md'
-            _hover={{ bg: 'purple.1' }}
-            color='purple.4'
-            bg='purple.05'
+            _hover={{ bg: 'rgb(255,255,255, 0.14)' }}
+            color='purple.05'
+            bg='rgb(255,255,255, 0.1)'
             rightIcon={<Icon weight='bold' as={ArrowUpRight} />}
             onClick={() => {
               router.push(`/forms/responses/${form.id}`);
@@ -79,18 +80,18 @@ const FormPreviewCard = ({ form }: FormPreviewCardProps) => {
           </Button>
           <Button
             size='md'
-            _hover={{ bg: 'purple.05' }}
-            color='purple.4'
-            bg='white'
+            _hover={{ bg: 'rgb(255,255,255, 0.14)' }}
+            color='purple.05'
+            bg='transparent'
             rightIcon={<Icon weight='bold' as={PencilSimple} />}
           >
             Edit
           </Button>
           <Button
             size='md'
-            _hover={{ bg: 'purple.05' }}
-            color='purple.4'
-            bg='white'
+            _hover={{ bg: 'rgb(255,255,255, 0.14)' }}
+            color='purple.05'
+            bg='transparent'
             rightIcon={<Icon weight='bold' as={LinkSimple} />}
             onClick={copyLink}
           >

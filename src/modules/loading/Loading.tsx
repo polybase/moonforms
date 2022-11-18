@@ -34,12 +34,12 @@ export const Loading: React.FC<LoadingProps> = ({
   if (localLoading) {
     if (center) {
       return (
-        <Center>
+        <Center mt={40}>
           <Spinner
             thickness='5px'
             speed='0.65s'
-            emptyColor='gray.200'
-            color='blue.500'
+            emptyColor='purple.1'
+            color='purple.4'
             size='xl'
           />
         </Center>

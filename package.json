@@ -24,6 +24,7 @@
     "@polybase/util": "^0.3.7",
     "@types/lodash": "^4.14.188",
     "@types/nanoid": "^3.0.0",
+    "eth-crypto": "^2.4.0",
     "ethereumjs-wallet": "^1.0.2",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.4",
