@@ -32,10 +32,10 @@ const CustomInput: FC<FieldHookConfig<string>> = ({ ...props }) => {
   const [field] = useField(props);
   return (
     <Input
-      color='purple.4'
-      focusBorderColor='purple.3'
-      borderColor='purple.2'
-      fontSize='lg'
+      color='white'
+      focusBorderColor='white'
+      borderColor='white'
+      fontSize='xl'
       {...field}
     />
   );
@@ -46,11 +46,14 @@ const CustomSelect: FC<FieldHookConfig<string>> = ({ ...props }) => {
   return (
     <Select
       {...field}
-      _hover={{ bg: 'purple.1' }}
-      _selected={{ bg: 'purple.1' }}
-      bg='purple.05'
-      color='purple.3'
+      _hover={{ bg: 'transparent' }}
+      _selected={{ bg: 'white', color: 'dark.1' }}
+      bg='transparent'
+      border={'1px'}
+      borderColor={'white'}
+      color='white'
       variant='filled'
+      fontSize={'xl'}
       w='sm'
     >
       {props.children}
@@ -60,7 +63,7 @@ const CustomSelect: FC<FieldHookConfig<string>> = ({ ...props }) => {
 
 const CustomCheckbox: FC<FieldHookConfig<string>> = ({ ...props }) => {
   const [field] = useField(props);
-  return <Checkbox {...field} colorScheme='purple' size='lg' />;
+  return <Checkbox {...field} colorScheme='red' size='lg' />;
 };
 
 const FormCreationCard = ({ index }: QuestionCardProps) => {
@@ -71,8 +74,8 @@ const FormCreationCard = ({ index }: QuestionCardProps) => {
       maxWidth='3xl'
       borderRadius='md'
       p={5}
-      border='2px'
-      borderColor='purple.2'
+      bg={'dark.1'}
+      boxShadow="lg"
     >
       <HStack w='full'>
         <Field
@@ -121,12 +124,14 @@ const FormCreationCard = ({ index }: QuestionCardProps) => {
       </Box>
 
       <HStack mt={4}>
-        <Tooltip bg='purple.2' color='white' label='Duplicate'>
+        <Tooltip bg='white' color='dark.1' label='Duplicate'>
           <IconButton
             size='lg'
-            color='purple.3'
-            bg='purple.05'
-            _hover={{ bg: 'purple.1' }}
+            color='white'
+            borderColor={'white'}
+            border={'1px'}
+            bg='transparent'
+            _hover={{ bg: 'white', color: 'dark.1' }}
             aria-label='Duplicate'
             icon={<Icon weight='bold' as={Copy} />}
           />
@@ -139,7 +144,7 @@ const FormCreationCard = ({ index }: QuestionCardProps) => {
             id={`questions.${index}.required`}
             name={`questions.${index}.required`}
           />
-          <Text fontWeight={500} color='purple.5'>
+          <Text fontWeight={500} color='white'>
             Required
           </Text>
         </HStack>

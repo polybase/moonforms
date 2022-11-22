@@ -40,7 +40,7 @@ export function ShortTextQuestion({
 }: QuestionTypeProps): ReactElement {
   return (
     <Input
-      _placeholder={{ color: 'purple.6' }}
+      color={'white'}
       variant='flushed'
       placeholder='Short text answer'
       disabled={disabled}
@@ -52,7 +52,7 @@ export function ShortTextQuestion({
 export function EmailQuestion({ disabled }: QuestionTypeProps): ReactElement {
   return (
     <Input
-      _placeholder={{ color: 'purple.6' }}
+      color={'white'}
       variant='flushed'
       placeholder='Email answer'
       disabled={disabled}
@@ -89,7 +89,7 @@ export function CheckboxQuestion({
   };
 
   return (
-    <Box maxW='2xl' borderRadius='md' border='1px' borderColor='purple.1' p={5}>
+    <Box maxW='3dxl' borderRadius='md' border='2px' borderColor='white' p={5}>
       <VStack display='flex' alignItems='start' w='full'>
         <Button
           size='sm'
@@ -106,7 +106,7 @@ export function CheckboxQuestion({
           {checkboxOptions.map((option, index) => {
             return (
               <HStack mt={2} key={index}>
-                <Checkbox colorScheme='purple' size='lg' disabled={disabled} />
+                <Checkbox  colorScheme='purple' size='lg' disabled={disabled} />
                 <Input
                   onChange={(e) => {
                     const newArr = [...checkboxOptions];
@@ -114,10 +114,9 @@ export function CheckboxQuestion({
                     setCheckboxOptions(newArr);
                     updateQuestionData();
                   }}
-                  _placeholder={{ color: 'purple.3' }}
-                  _selected={{ borderColor: 'purple.6' }}
+                  color={'white'}
                   variant='flushed'
-                  placeholder='Option'
+                  placeholder={`Option ${index + 1}`}
                   type='text'
                   w='full'
                 />
@@ -150,7 +149,7 @@ export function MultipleChoiceQuestion({
   };
 
   return (
-    <Box maxW='2xl' borderRadius='md' border='1px' borderColor='purple.1' p={5}>
+    <Box maxW='3xl' borderRadius='md' border='1px' borderColor='purple.1' p={5}>
       <VStack display='flex' alignItems='start' w='full'>
         <Button
           size='sm'
@@ -175,10 +174,9 @@ export function MultipleChoiceQuestion({
                     setChoices(newArr);
                     updateQuestionData();
                   }}
-                  _placeholder={{ color: 'purple.3' }}
-                  _selected={{ borderColor: 'purple.6' }}
+                  color={'white'}
                   variant='flushed'
-                  placeholder='Option'
+                  placeholder={`Option ${index + 1}`}
                   type='text'
                   w='full'
                 />

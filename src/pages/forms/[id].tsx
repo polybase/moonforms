@@ -1,5 +1,4 @@
-import { Box, Button, Container, Text, VStack } from '@chakra-ui/react';
-import EthCrypto from 'eth-crypto';
+import {Alert, Box, Button, Container, Fade, Icon, Text, VStack} from '@chakra-ui/react';
 import { CollectionRecordResponse } from '@polybase/client';
 import { usePolybase } from '@polybase/react';
 import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
@@ -7,10 +6,12 @@ import { map } from 'lodash';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
+import { aescbc, secp256k1, x25519xsalsa20poly1305, decodeFromString, encodeToString } from '@polybase/util'
 
 import ResponseQuestion from '../../components/Questions/ResponseCard';
 import { Layout } from '../../features/common/Layout';
 import {
+  AlertDetails,
   FormRecord,
   QuestionRecord,
   ResponseDetails,
@@ -18,14 +19,22 @@ import {
 } from '../../features/types';
 import { useAuth } from '../../features/users/useAuth';
 
+const pause = (time: number) =>
+  new Promise((resolve) => setTimeout(resolve, time));
+
 const FormResponsePage = () => {
   const router = useRouter();
   const polybase = usePolybase();
   const { auth } = useAuth();
 
   const [formId, setFormId] = useState<string>(router.query.id as string);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
+  const [alertDetails, setAlertDetails] = useState<AlertDetails>({
+    show: false,
+    type: 'error',
+    message: '',
+  });
 
   const [questions, setQuestions] =
     useState<CollectionRecordResponse<QuestionRecord>[]>();
@@ -70,7 +79,27 @@ const FormResponsePage = () => {
   ) => {
     if (!auth || !authorizedUsers) throw new Error('You are not authenticated');
 
+    let canSubmitForm = true;
     setFormSubmitting(true);
+
+    for (let i = 0; i < values.answers.length; i++) {
+      const question = questions?.find(q => q.data.id === values.answers[i].questionId);
+      if (question?.data.required === 'true') {
+        if (values.answers[i].data === '' || values.answers[i].type === 'checkbox' && values.answers[i].data === '[]') {
+          canSubmitForm = false;
+        }
+      }
+    }
+
+    if (!canSubmitForm) {
+      setAlertDetails({
+        show: true,
+        type: 'error',
+        message: 'Answer all of the required questions to submit the form'
+      })
+      await pause(300)
+      setFormSubmitting(false)
+    }
 
     const responseId = nanoid();
     const _values = values;
@@ -78,61 +107,44 @@ const FormResponsePage = () => {
     _values.id = responseId;
     _values.form = formId;
 
-    const symmetricKey = EthCrypto.createIdentity();
+    const symmetricKey = aescbc.generateSecretKey()
 
-    const encryptedResponse = await EthCrypto.encryptWithPublicKey(
-      symmetricKey.publicKey,
-      JSON.stringify(_values.answers)
-    );
+    const encryptedResponse = await aescbc.symmetricEncryptToEncoding(symmetricKey, JSON.stringify(_values.answers), 'base64')
 
     await responseCollection.create([
       responseId,
       formId,
       `${Math.floor(Date.now() / 1000)}`,
-      EthCrypto.cipher.stringify(encryptedResponse),
+      encryptedResponse,
     ]);
 
     const createdUserResponses = authorizedUsers.map(async (user) => {
       const { id: userId, publicKey } = user.data;
 
-      const encryptedSymmetricKeyWithUsersPublicKey = await EthCrypto.encryptWithPublicKey(
-        publicKey.replace('0x', ''),
-        JSON.stringify(symmetricKey)
-      );
+      const decodedPublicKeyStr = decodeFromString(publicKey, 'hex')
+      const encryptedSymmetricKeyWithUsersPublicKey = await secp256k1.asymmetricEncryptToEncoding(decodedPublicKeyStr, encodeToString(symmetricKey, 'hex'), 'base64')
 
       return responseUserCollection.create([
         nanoid(),
         userId,
         responseId,
-        EthCrypto.cipher.stringify(encryptedSymmetricKeyWithUsersPublicKey),
+        encryptedSymmetricKeyWithUsersPublicKey,
       ]);
     });
 
     await Promise.all(createdUserResponses);
-
-    // setFormSubmitting(false);
+    setAlertDetails({
+      show: true,
+      type: 'success',
+      message: '🎉 Your response has been submitted'
+    })
+    setFormSubmitting(false);
     helpers.resetForm();
   };
 
-  // const encryptData = async (data: string) => {
-  //   // const encryptedObject = await EthCrypto.encryptWithPublicKey(
-  //   //   formRecord?.data..replace('0x', '') as string,
-  //   //   data
-  //   // );
-  //
-  //   // const decrypted = await EthCrypto.decryptWithPrivateKey(auth?.walletAccount.getPrivateKeyString() as string, EthCrypto.cipher.parse(EthCrypto.cipher.stringify(encryptedObject)));
-  //   // console.log('decrypted', decrypted)
-  //
-  //   // return EthCrypto.cipher.stringify(encryptedObject);
-  // };
-
   useEffect(() => {
-    setIsLoading(true);
     setFormId(router.query.id as string);
-
     getCollections(formId).catch(() => null);
-
-    setIsLoading(false);
   }, [getCollections, router, auth, formId, setIsLoading]);
   return (
     <Layout isLoading={isLoading}>
@@ -143,14 +155,16 @@ const FormResponsePage = () => {
           display='flex'
           flexDirection='column'
         >
+
           <Box
             w='full'
             borderRadius='md'
             maxWidth='container.lg'
+            boxShadow={'md'}
             bgGradient={'radial-gradient(78.9% 78.52% at 24.68% 21.48%, #2C2E30 0%, #1E2124 100%)'}
             p={8}
           >
-            <Text color='purple.1' fontWeight={700} fontSize={{base: '2xl', lg: '5xl'}}>
+            <Text color='white' fontWeight={700} fontSize={{base: '2xl', lg: '5xl'}}>
               {formRecord?.data.title}
             </Text>
             <Text color='gray.300' as='p' fontSize='md'>
@@ -158,6 +172,24 @@ const FormResponsePage = () => {
             </Text>
           </Box>
           <Box w='full' borderRadius='md' maxWidth='container.lg'>
+            {alertDetails.show && (
+              <Fade in={alertDetails.show} unmountOnExit={true}>
+                <Alert
+                  rounded='lg'
+                  fontSize={'lg'}
+                  fontWeight={500}
+                  color={
+                    alertDetails.type === 'error' ? 'red.800' : 'green.800'
+                  }
+                  status={alertDetails.type}
+                  w={'full'}
+                >
+                  <Text>
+                    {alertDetails.message}
+                  </Text>
+                </Alert>
+              </Fade>
+            )}
             <Formik
               initialValues={
                 {
@@ -186,10 +218,10 @@ const FormResponsePage = () => {
                     )}
                   </FieldArray>
                   <Button
-                    size='md'
-                    _hover={{ bg: 'purple.1' }}
-                    color='purple.4'
-                    bg='purple.05'
+                    size='lg'
+                    _hover={{ bg: 'gray.300' }}
+                    color='dark.1'
+                    bg='white'
                     mt='4'
                     type='submit'
                     isLoading={formSubmitting}

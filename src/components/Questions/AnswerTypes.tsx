@@ -1,6 +1,6 @@
 import {
   Box,
-  Checkbox,
+  Checkbox, CheckboxGroup,
   HStack,
   Input,
   Radio,
@@ -39,8 +39,7 @@ export function ShortTextAnswer({
         setTextResponse(e.target.value);
         updateAnswer();
       }}
-      _placeholder={{ color: 'gray.400' }}
-      color={'purple.3'}
+      color={'white'}
       variant='flushed'
       placeholder='Your answer'
       type='text'
@@ -74,17 +73,12 @@ export function EmailAnswer({
 }
 
 export function DateAnswer({ questionIndex }: AnswerTypeProps): ReactElement {
-  const [dateResponse, setDateResponse] = useState<string>('');
   const formikCtx = useFormikContext<ResponseDetails>();
 
-  const updateAnswer = () => {
-    formikCtx.setFieldValue(`answers.${questionIndex}.data`, dateResponse);
-  };
   return (
     <Input
       onChange={(e) => {
-        setDateResponse(e.target.value);
-        updateAnswer();
+        formikCtx.setFieldValue(`answers.${questionIndex}.data`, e.target.value);
       }}
       _placeholder={{ color: 'gray.400' }}
       color={'purple.3'}
@@ -95,23 +89,22 @@ export function DateAnswer({ questionIndex }: AnswerTypeProps): ReactElement {
 }
 
 export function CheckboxAnswer({
-  question,
-  questionIndex,
-}: AnswerTypeProps): ReactElement {
+  question, questionIndex }: AnswerTypeProps): ReactElement {
   const checkBoxQuestions = JSON.parse(question.data) as CheckboxOption[];
+  const formikCtx = useFormikContext<ResponseDetails>();
+
   return (
     <Box maxW='2xl' p={2}>
       <VStack display='flex' alignItems='start' w='full'>
-        <Box w='full'>
+        <CheckboxGroup onChange={(value) => {
+          formikCtx.setFieldValue(`answers.${questionIndex}.data`, JSON.stringify(value));
+        }}>
           {checkBoxQuestions.map((option, index) => {
             return (
-              <HStack mt={2} key={index}>
-                <Checkbox colorScheme='purple' size='lg' />
-                <Text color='white' fontSize={'lg'}>{option.title}</Text>
-              </HStack>
+              <Checkbox value={option.title}key={index} color='white' colorScheme='purple' size='lg'>{option.title}</Checkbox>
             );
           })}
-        </Box>
+        </CheckboxGroup>
       </VStack>
     </Box>
   );
@@ -124,16 +117,19 @@ export function MultipleChoiceAnswer({
   const multipleChoiceOptions = JSON.parse(
     question.data
   ) as MultipleChoiceOption[];
+  const formikCtx = useFormikContext<ResponseDetails>();
 
   return (
     <Box maxW='2xl' p={2}>
       <VStack display='flex' alignItems='start' w='full'>
         <Box w='full'>
-          <RadioGroup>
+          <RadioGroup onChange={(nextValue) => {
+            formikCtx.setFieldValue(`answers.${questionIndex}.data`, nextValue);
+          }}>
             <Stack direction='column'>
               {multipleChoiceOptions.map((option, index) => {
                 return (
-                  <Radio key={index} value={option.title}>
+                  <Radio key={index} colorScheme='purple' value={option.title}>
                     <Text color={"white"} fontSize={'lg'}>{option.title}</Text>
                   </Radio>
                 );

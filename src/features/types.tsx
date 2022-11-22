@@ -31,11 +31,18 @@ export interface QuestionRecord {
 // Represents a record from the Response collection
 export interface ResponseRecord {
   id: string;
-  form: string;
+  formId: string;
   data: string;
-  publickey: string;
-  createdat: string;
+  createdAt: string;
 }
+// Represents a record from the ResponseUser collection
+export interface ResponseUserRecord {
+  id: string;
+  userId: string;
+  responseId: string;
+  encryptedEncryptionKey: string;
+}
+
 
 export interface ResponseDetails {
   id: string;
@@ -81,4 +88,10 @@ export interface MultipleChoiceOption {
 export interface LinearScaleConfig {
   min: string;
   max: string;
+}
+
+export interface AlertDetails {
+  show: boolean;
+  message: string;
+  type: 'success' | 'error';
 }

@@ -90,7 +90,7 @@ collection responseUser {
 
 async function loadSchema () {
   const db = new Polybase()
-  await db.applySchema(schema, 'formsTesting_3');
+  await db.applySchema(schema, 'formsTesting_4');
   return 'Schema loaded';
 }
 

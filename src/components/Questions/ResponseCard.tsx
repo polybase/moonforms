@@ -23,6 +23,7 @@ const ResponseCard = ({ question, index }: ResponseQuestionProps) => {
   const setDefaultValues = useCallback(() => {
     formikCtx.setFieldValue(`answers.${index}.questionId`, question.id);
     formikCtx.setFieldValue(`answers.${index}.type`, question.type);
+    formikCtx.setFieldValue(`answers.${index}.data`, '');
   }, [formikCtx, index, question.id, question.type]);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const ResponseCard = ({ question, index }: ResponseQuestionProps) => {
       mt={4}
       maxWidth='full'
       borderRadius='md'
+      boxShadow={'md'}
       p={6}
       border='2px'
       borderColor='rgb(255,255,255, 0.05)'

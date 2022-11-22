@@ -29,22 +29,19 @@ import React, { useEffect, useState } from 'react';
 import FormCreationCard from '../../../components/Questions/FormCreationCard';
 import { initialFormValue } from '../../../features/common/formik';
 import { Layout } from '../../../features/common/Layout';
-import { FormDetails, QuestionDetails } from '../../../features/types';
+import { FormDetails, QuestionDetails, AlertDetails } from '../../../features/types';
 import { useAuth } from '../../../features/users/useAuth';
-interface AlertDetails {
-  message: string;
-  type: 'success' | 'error';
-}
+
 const pause = (time: number) =>
   new Promise((resolve) => setTimeout(resolve, time));
 
 const FormDetails = () => {
   const { handleChange, values } = useFormikContext<FormDetails>();
   return (
-    <>
+    <Box maxW={'3xl'}>
       <Text
         fontWeight='600'
-        color='purple.05'
+        color='white'
         mb={1}
         fontSize='xl'
         as={FormLabel}
@@ -55,11 +52,12 @@ const FormDetails = () => {
       <Input
         id='title'
         color='white'
-        focusBorderColor='purple.3'
-        borderColor='purple.3'
-        fontSize='lg'
+        focusBorderColor='white'
+        borderColor='white'
+        fontSize='xl'
         p={6}
-        w={{ base: 'full', sm: 'lg', md: 'lg', lg: 'lg' }}
+        boxShadow="md"
+        w={{ base: 'full', sm: 'lg', md: 'lg', lg: '3xl' }}
         placeholder='Untitled form'
         type='text'
         value={values.title}
@@ -77,11 +75,12 @@ const FormDetails = () => {
       </Text>
       <Textarea
         px={6}
-        fontSize='lg'
+        boxShadow="md"
+        fontSize='xl'
         color='white'
-        focusBorderColor='purple.3'
-        borderColor='purple.3'
-        maxW='xl'
+        focusBorderColor='white'
+        borderColor='white'
+        w={{ base: 'full', sm: 'lg', md: 'lg', lg: '3xl' }}
         name='description'
         onChange={handleChange}
         value={values.description}
@@ -89,7 +88,7 @@ const FormDetails = () => {
         size='md'
         resize='none'
       />
-    </>
+    </Box>
   );
 };
 
@@ -104,8 +103,8 @@ const NewForm = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [formId, setFormId] = useState<string>(nanoid());
-  const [showAlert, setShowAlert] = useState<boolean>(false);
   const [alertDetails, setAlertDetails] = useState<AlertDetails>({
+    show: false,
     type: 'error',
     message: '',
   });
@@ -140,14 +139,15 @@ const NewForm = () => {
       }
 
       if (values.questions.length < 1) {
-        setShowAlert(true);
         setAlertDetails({
+          show: true,
           type: 'error',
           message: "It seems like your form doesn't have questions",
         });
         await pause(2000);
-        setShowAlert(false);
+
         setAlertDetails({
+          show: false,
           type: 'error',
           message: '',
         });
@@ -171,15 +171,20 @@ const NewForm = () => {
 
       helpers.resetForm();
 
-      setShowAlert(true);
       setAlertDetails({
+        show: true,
         type: 'success',
         message: '🎉 Your form has been created!',
       });
 
       await pause(4000);
 
-      setShowAlert(false);
+      setAlertDetails({
+        show: false,
+        type: 'error',
+        message: '',
+      });
+
       setFormId(nanoid());
     } catch (e) {
       toast({
@@ -202,16 +207,10 @@ const NewForm = () => {
   }, [auth, router]);
   return (
     <Layout isLoading={loading} >
-      <Container maxWidth='container.lg'>
+      <Container maxWidth='container.xl'>
         <VStack
           display='flex'
           maxW='full'
-          alignItems={{
-            base: 'left',
-            sm: 'center',
-            md: 'center',
-            lg: 'center',
-          }}
         >
           <Box
             display='flex'
@@ -225,10 +224,10 @@ const NewForm = () => {
               }}
               cursor='pointer'
               color='white'
-              fontSize='md'
+              fontSize='xl'
               fontWeight={500}
             >
-              {'< View your Forms'}
+              {'< Dashboard'}
             </Text>
             <VStack
               mt={10}
@@ -237,8 +236,8 @@ const NewForm = () => {
               display='flex'
               alignItems='center'
             >
-              {showAlert && (
-                <Fade in={showAlert} unmountOnExit={true}>
+              {alertDetails.show && (
+                <Fade in={alertDetails.show} unmountOnExit={true}>
                   <Alert
                     rounded='lg'
                     color={
@@ -272,8 +271,7 @@ const NewForm = () => {
                 onSubmit={handleSubmitForm}
               >
                 {({ values }) => (
-                  <Box pb={3} w={'full'}           display='flex'
-                       alignItems='center'>
+                  <Box pb={3}  maxWidth='3xl' display='flex' alignItems='center'>
                     <Form>
                       <FormDetails />
                       <Box mt={10} mb={5}>
@@ -299,9 +297,13 @@ const NewForm = () => {
                                     data: '',
                                   });
                                 }}
-                                bgGradient={'radial-gradient(78.9% 78.52% at 24.68% 21.48%, #2C2E30 0%, #1E2124 100%)'}
-                                color='purple.05'
-                                size='sm'
+                                bg={'transparent'}
+                                _hover={{bg: 'white', color: 'dark.1'}}
+                                border={'1px'}
+                                borderColor={'white'}
+                                borderRadius={'lg'}
+                                color='white'
+                                size='md'
                               >
                                 Add question
                               </Button>
@@ -309,7 +311,7 @@ const NewForm = () => {
                               {values.questions.length < 1 && (
                                 <Box
                                   border='2px'
-                                  borderColor='purple.2'
+                                  borderColor='gray.300'
                                   borderStyle='dashed'
                                   rounded='md'
                                   p={3}
@@ -321,9 +323,9 @@ const NewForm = () => {
                                     fontSize='lg'
                                     fontWeight={500}
                                     textAlign='center'
-                                    color='purple.2'
+                                    color='white'
                                   >
-                                    Add a question to get started
+                                    🚀 Add a question to get started
                                   </Text>
                                 </Box>
                               )}
@@ -342,9 +344,9 @@ const NewForm = () => {
                       </Box>
                       <Button
                         size='lg'
-                        _hover={{ bg: 'purple.3' }}
-                        color='white'
-                        bg='purple.2'
+                        _hover={{ bg: 'gray.300' }}
+                        color='dark.1'
+                        bg='white'
                         mt='4'
                         type='submit'
                         isLoading={formSubmitting}

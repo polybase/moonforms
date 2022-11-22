@@ -73,8 +73,8 @@ const Dashboard = () => {
             >
               {createdUserForms.length < 1 && (
                 <Box
-                  border='1px'
-                  borderColor='purple.2'
+                  border='2px'
+                  borderColor='gray.300'
                   borderStyle='dashed'
                   rounded='md'
                   p={3}
@@ -82,8 +82,8 @@ const Dashboard = () => {
                   justifyContent='center'
                   mt={4}
                 >
-                  <Text textAlign='center' color='purple.2'>
-                    Create a form to get started
+                  <Text fontSize={'xl'} fontWeight={500} textAlign='center' color='white'>
+                    🌙 No forms to moon here!
                   </Text>
                 </Box>
               )}

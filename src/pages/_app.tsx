@@ -14,7 +14,7 @@ import '@fontsource/lora/400.css';
 import { AuthProvider } from '../features/users/AuthProvider';
 import { theme } from '../styles/theme';
 
-const polybase = new Polybase({ defaultNamespace: 'formsTesting_3' });
+const polybase = new Polybase({ defaultNamespace: 'formsTesting_4' });
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <PolybaseProvider polybase={polybase}>
