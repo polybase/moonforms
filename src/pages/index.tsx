@@ -2,9 +2,10 @@ import {
   Box,
   Button,
   Container,
+  Heading,
   HStack,
   Image,
-  Spacer,
+  Link,
   Stack,
   Text,
   VStack,
@@ -17,6 +18,55 @@ import Marquee from 'react-fast-marquee';
 import { Layout } from '../features/common/Layout';
 import { useAuth } from '../features/users/useAuth';
 import { useLogin } from '../features/users/useLogin';
+
+const BENEFITS = [
+  {
+    title: "Cryptographically guaranteed privacy",
+    breakdown: [
+      {
+        text: "With Moonforms, only people with explicit permission can view responses.",
+        image: "/moon_emoji.svg"
+      },
+      {
+        text: "In Google Forms, Typeform or Airtable, anyone at those companies can view the data.",
+        image: "/mask_emoji.svg"
+      }
+    ]
+  },
+  {
+    title: "Censorship-resistant",
+    breakdown: [
+      {
+        text: "Moonforms forms and responses cannot be censored or taken down by corporations or governments.",
+        image: "/moon_emoji.svg"
+      },
+      {
+        text: "This can happen with web2 forms that collect data that authoritarian governments don’t like.",
+        image: "/mask_emoji.svg"
+      }
+    ]
+  },
+  {
+    title: "Linked to wallets and open source",
+    breakdown: [
+      {
+        text: "Respondents can view responses for all Moonforms they submit by logging in with their wallet.",
+        image: "/moon_emoji.svg"
+      },
+      {
+        text: "In web2 forms, once the response is submitted respondents loose access to their data.",
+        image: "/mask_emoji.svg"
+      }
+    ]
+  },
+]
+
+const MARQUEE_MESSAGES = [
+  "Typeform is sooooo web2",
+  "Do you even decentralize bro?",
+  "Still using Google Forms?"
+]
+
 const Home: NextPage = () => {
   const { auth } = useAuth();
   const login = useLogin();
@@ -33,7 +83,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Layout>
-        <VStack spacing={{ base: 10, md: 44, lg: 44 }}>
+        <VStack spacing={44}>
           <Container maxWidth='container.xl' mt={36}>
             <Box
               alignItems='center'
@@ -41,18 +91,19 @@ const Home: NextPage = () => {
               display='flex'
               flexDirection='column'
             >
-              <Text
+              <Heading
+                as='h1'
                 color='yellow.5'
                 fontSize={{ base: '4xl', lg: '6xl' }}
                 fontFamily={` "Lora", serif;`}
+                fontWeight='400'
               >
                 Decentralized forms and surveys
-              </Text>
-              <Box maxW='container.md'>
-                <Text color='gray.200' fontSize={{ base: 'xl', lg: '3xl' }}>
-                  Create forms, share links and view responses (even if there’s
-                  a nuclear war)
-                </Text>
+              </Heading>
+              <Box maxW='container.md' pt={8}>
+                <Heading color='gray.200' fontSize={{ base: 'xl', lg: '3xl' }} as='h2' fontWeight='400'>
+                  The most privacy protecting & censorship resistant forms
+                </Heading>
               </Box>
               <Button
                 onClick={handleGetStartedClick}
@@ -62,6 +113,7 @@ const Home: NextPage = () => {
                 _hover={{ bg: 'purple.5' }}
                 bg='white'
                 borderRadius='lg'
+                size='lg'
               >
                 Create a Moonform
               </Button>
@@ -74,143 +126,71 @@ const Home: NextPage = () => {
               display='flex'
               flexDirection='column'
             >
-              <VStack mt={{ base: 12, lg: 0 }} spacing={{ base: 12, lg: 28 }}>
                 <Text
                   color='yellow.5'
                   fontWeight='700'
-                  fontSize={{ base: '4xl', lg: '5xl' }}
+                fontSize={{ base: '4xl', lg: '5xl' }}
+                mb={8}
                 >
-                  Why moonforms?
+                  Why Moonforms?
                 </Text>
-                <Box>
+              <VStack spacing={12}>
+                { BENEFITS.map((b) => {
+                  return (
+                    <Box key={b.title}>
                   <Text
                     mt={8}
                     color='white'
                     fontWeight='700'
-                    fontSize={{ base: '3xl', lg: '4xl' }}
+                    fontSize={{ base: 'xl', lg: '2xl' }}
                   >
-                    Cryptographically guaranteed privacy
+                    {b.title}
                   </Text>
                   <Stack
                     mt={14}
                     direction={['column', 'row']}
-                    spacing={{ base: 12 }}
-                  >
-                    <Box maxWidth='xs'>
-                      <VStack>
-                        <Image src='/moon_emoji.svg' alt='moo emoji' />
-                        <Box>
-                          <Text color='white' fontWeight={500} fontSize='lg'>
-                            With Moonforms, only people with explicit permission
-                            can view responses.
-                          </Text>
-                        </Box>
+                    spacing={12}
+                      >
+                        {b.breakdown.map((bb) => {
+                          return (
+                            <Box maxWidth='xs' key={bb.text}>
+                            <VStack spacing={8}>
+                            <Image height='3rem' src={bb.image} alt='moon emoji' />
+                            <Box>
+                              <Text color='white' fontSize='lg'>
+                                {bb.text}
+                              </Text>
+                            </Box>
                       </VStack>
                     </Box>
-                    <Spacer />
-                    <Box maxWidth='xs'>
-                      <VStack>
-                        <Image src='/mask_emoji.svg' alt='mask emoji' />
-                        <Box>
-                          <Text color='white' fontWeight={500} fontSize='lg'>
-                            In Google Forms, Typeform or Airtable, anyone at
-                            those companies can view the data.
-                          </Text>
-                        </Box>
-                      </VStack>
-                    </Box>
+                          )
+                        })}
+                    
                   </Stack>
                 </Box>
-                <Box>
-                  <Text
-                    mt={8}
-                    color='white'
-                    fontWeight='700'
-                    fontSize={{ base: '3xl', lg: '4xl' }}
-                  >
-                    Censorship-resistant
-                  </Text>
-                  <Stack mt={14} direction={['column', 'row']} spacing='24px'>
-                    <Box maxWidth='xs'>
-                      <VStack>
-                        <Image src='/moon_emoji.svg' alt='moon emoji' />
-                        <Box>
-                          <Text color='white' fontWeight={500} fontSize='lg'>
-                            Moonform forms and responses cannot be censored or
-                            taken down by corporations or governments.
-                          </Text>
-                        </Box>
-                      </VStack>
-                    </Box>
-                    <Spacer />
-                    <Box maxWidth='xs'>
-                      <VStack>
-                        <Image src='/mask_emoji.svg' alt='mask emoji' />
-                        <Box>
-                          <Text color='white' fontWeight={500} fontSize='lg'>
-                            This can happen with web2 forms that collect data
-                            that authoritarian governments don’t like.
-                          </Text>
-                        </Box>
-                      </VStack>
-                    </Box>
-                  </Stack>
-                </Box>
-                <Box>
-                  <Text
-                    mt={8}
-                    color='white'
-                    fontWeight='700'
-                    fontSize={{ base: '3xl', lg: '4xl' }}
-                  >
-                    Linked to wallets and open source
-                  </Text>
-                  <Stack mt={14} direction={['column', 'row']} spacing='24px'>
-                    <Box maxWidth='xs'>
-                      <VStack>
-                        <Image src='/moon_emoji.svg' alt='moon emoji' />
-                        <Box>
-                          <Text color='white' fontWeight={500} fontSize='lg'>
-                            Respondents can view responses for all Moonforms
-                            they submit by logging in with their wallet.
-                          </Text>
-                        </Box>
-                      </VStack>
-                    </Box>
-                    <Spacer />
-                    <Box maxWidth='xs'>
-                      <VStack>
-                        <Image src='/mask_emoji.svg' alt='mask emoji' />
-                        <Box>
-                          <Text color='white' fontWeight={500} fontSize='lg'>
-                            In web2 forms, once the response is submitted
-                            respondents loose access to their data.
-                          </Text>
-                        </Box>
-                      </VStack>
-                    </Box>
-                  </Stack>
-                </Box>
+                  )
+                })}
               </VStack>
             </Box>
           </Container>
-          <Container maxWidth='container.xl'>
-            <Box alignItems='center' display='flex' flexDirection='column'>
-              <VStack mt={{ base: 0, lg: 0 }} w='full'>
-                <Text
+          <Container maxWidth='container.lg'>
+            <Box alignItems='center' display='flex' flexDirection='column' px={{base: 8, lg: 12}}>
+              <VStack mt={{ base: 0, lg: 0 }}>
+              <Text
                   color='yellow.5'
                   fontWeight='700'
-                  fontSize={{ base: '4xl', lg: '5xl' }}
+                fontSize={{ base: '4xl', lg: '5xl' }}
+                mb={8}
                 >
                   How does it work?
                 </Text>
-                <Box textAlign='left' w='full'>
+                <Box textAlign='left'>
                   <Text
                     color='white'
                     fontWeight='400'
                     fontSize={{ base: 'lg', lg: '2xl' }}
                   >
-                    Moonforms is powered by Polybase, a decentralized database.
+                    Moonforms is powered by <Link href='https://polybase.xyz'>Polybase</Link>, a decentralized database.
                   </Text>
                   <Text
                     color='white'
@@ -238,7 +218,7 @@ const Home: NextPage = () => {
                     fontWeight='400'
                     fontSize={{ base: 'lg', lg: '2xl' }}
                   >
-                    Don’t trust us, check the code: [github]
+                    Don’t trust us, <Link href='https://github.com/polybase/moonforms' isExternal>check the code</Link>.
                   </Text>
                 </Box>
               </VStack>
@@ -258,7 +238,7 @@ const Home: NextPage = () => {
                   fontWeight='700'
                   fontSize={{ base: '4xl', lg: '5xl' }}
                 >
-                  Still use google forms?
+                  Still using Google Forms?
                 </Text>
                 <Button
                   onClick={handleGetStartedClick}
@@ -267,6 +247,7 @@ const Home: NextPage = () => {
                   _hover={{ bg: 'purple.5' }}
                   bg='white'
                   borderRadius='lg'
+                  size='lg'
                 >
                   Create a Moonform
                 </Button>
@@ -277,27 +258,36 @@ const Home: NextPage = () => {
       </Layout>
       <Box textColor='white' mt={24} p={3} w='full'>
         <Marquee gradient={false}>
-          <HStack spacing={12}>
-            <Text fontSize='xl' fontWeight={500}>
-              Typeform is soooo web2
-            </Text>
-            <Text
-              fontSize='2xl'
-              textShadow='rgb(255 254 241 / 50%) 0px 0px 20px'
-            >
-              ✦
-            </Text>
+          <HStack spacing={12} pl={12}>
+            {MARQUEE_MESSAGES.map((m) => {
+              return (
+                <>
+                <Text fontSize='xl' fontWeight={500}>
+                {m}
+              </Text>
+              <Text
+                fontSize='2xl'
+              >
+                ✦
+                    </Text>
+                  </>
+                )
+            })}
             <Text fontSize='xl' fontWeight={500}>
               Do you even decentralize bro?
             </Text>
             <Text
               fontSize='2xl'
-              textShadow='rgb(255 254 241 / 50%) 0px 0px 20px'
             >
               ✦
             </Text>
             <Text fontSize='xl' fontWeight={500}>
               Still using Google Forms?
+            </Text>
+            <Text
+              fontSize='2xl'
+            >
+              ✦
             </Text>
           </HStack>
         </Marquee>

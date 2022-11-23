@@ -12,6 +12,7 @@ import {
   MenuList,
   Spacer,
 } from '@chakra-ui/react';
+import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { CaretDown, House, SignOut } from 'phosphor-react';
 import React from 'react';
@@ -36,11 +37,16 @@ export function Layout({ children, isLoading }: LayoutProps) {
   const router = useRouter();
 
   return (
-    <Flex height='100%' flexDirection='column'>
+    <>
+      <Head>
+        <title>Moonforms • Decentralized forms and surveys</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Flex height='100%' flexDirection='column'>
       <Container maxW='container.xl'>
-        <HStack p={4}>
+        <HStack p={8}>
           <Box>
-            <Image src='/moonforms_logo.svg' alt='logo' />
+            <Image height='3rem' src='/moonforms_logo.svg' alt='Moonforms logo' />
           </Box>
           <Spacer />
           {!auth && (
@@ -126,5 +132,6 @@ export function Layout({ children, isLoading }: LayoutProps) {
         )}
       </Box>
     </Flex>
+    </>
   );
 }
