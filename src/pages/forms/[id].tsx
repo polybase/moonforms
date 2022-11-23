@@ -1,5 +1,6 @@
 import {Alert, Box, Button, Container, Fade, Icon, Text, VStack} from '@chakra-ui/react';
 import { CollectionRecordResponse } from '@polybase/client';
+import * as eth from '@polybase/eth';
 import { usePolybase } from '@polybase/react';
 import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import { map } from 'lodash';
@@ -118,7 +119,7 @@ const FormResponsePage = () => {
       encryptedResponse,
     ]);
 
-    const createdUserResponses = authorizedUsers.map(async (user) => {
+    const createdUserResponses = authorizedUsers.map(async (user, index) => {
       const { id: userId, publicKey } = user.data;
 
       const decodedPublicKeyStr = decodeFromString(publicKey, 'hex')

@@ -42,8 +42,7 @@ export function useLogin() {
       const privateKeyBuff = user.wallet.getPrivateKey();
       const privateKey = privateKeyBuff.toString('hex');
       const encryptedPrivateKey = await eth.encrypt(privateKey, accountAddress);
-
-      await userCollection.create([accountAddress, encryptedPrivateKey]);
+      await userCollection.create([accountAddress, encryptedPrivateKey, user.wallet.getPublicKey().toString('hex')]);
     }
 
     await login(accountAddress, user.wallet);

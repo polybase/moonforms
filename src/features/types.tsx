@@ -32,7 +32,7 @@ export interface QuestionRecord {
 export interface ResponseRecord {
   id: string;
   formId: string;
-  data: string;
+  encryptedData: string;
   createdAt: string;
 }
 // Represents a record from the ResponseUser collection

@@ -8,10 +8,10 @@ collection user {
     
   @index(id, encryptedPrivateKey, publicKey);
 
-  constructor (id: string, privateKey: string) {
+  constructor (id: string, privateKey: string, publicKey: string) {
     this.id = id;
     this.encryptedPrivateKey = privateKey;
-    this.publicKey = ctx.publicKey;
+    this.publicKey = publicKey;
   }
 }
 
