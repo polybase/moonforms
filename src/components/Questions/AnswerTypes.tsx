@@ -1,7 +1,6 @@
 import {
   Box,
   Checkbox, CheckboxGroup,
-  HStack,
   Input,
   Radio,
   RadioGroup,
@@ -39,7 +38,7 @@ export function ShortTextAnswer({
         setTextResponse(e.target.value);
         updateAnswer();
       }}
-      color={'white'}
+      color="white"
       variant='flushed'
       placeholder='Your answer'
       type='text'
@@ -64,7 +63,7 @@ export function EmailAnswer({
         updateAnswer();
       }}
       _placeholder={{ color: 'gray.400' }}
-      color={'purple.3'}
+      color="purple.3"
       variant='flushed'
       placeholder='Your email'
       type='email'
@@ -81,7 +80,7 @@ export function DateAnswer({ questionIndex }: AnswerTypeProps): ReactElement {
         formikCtx.setFieldValue(`answers.${questionIndex}.data`, e.target.value);
       }}
       _placeholder={{ color: 'gray.400' }}
-      color={'purple.3'}
+      color="purple.3"
       variant='flushed'
       type='datetime-local'
     />
@@ -130,7 +129,7 @@ export function MultipleChoiceAnswer({
               {multipleChoiceOptions.map((option, index) => {
                 return (
                   <Radio key={index} colorScheme='purple' value={option.title}>
-                    <Text color={"white"} fontSize={'lg'}>{option.title}</Text>
+                    <Text color="white" fontSize="lg">{option.title}</Text>
                   </Radio>
                 );
               })}

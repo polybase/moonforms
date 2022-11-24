@@ -43,7 +43,7 @@ export const Loading: React.FC<LoadingProps> = ({
               color='dark.1'
               size='xl'
             />
-            <Text fontSize={'2xl'} fontWeight={600} color={'white'}>Loading...</Text>
+            <Text fontSize="2xl" fontWeight={600} color="white">Loading...</Text>
           </VStack>
         </Center>
       );

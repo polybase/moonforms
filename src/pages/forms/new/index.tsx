@@ -20,7 +20,7 @@ import {
   FormikHelpers,
   useFormikContext,
 } from 'formik';
-import {map, set} from 'lodash';
+import {map} from 'lodash';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/router';
 import { ArrowUpRight, Plus } from 'phosphor-react';
@@ -29,7 +29,7 @@ import React, { useEffect, useState } from 'react';
 import FormCreationCard from '../../../components/Questions/FormCreationCard';
 import { initialFormValue } from '../../../features/common/formik';
 import { Layout } from '../../../features/common/Layout';
-import { FormDetails, QuestionDetails, AlertDetails } from '../../../features/types';
+import { AlertDetails,FormDetails, QuestionDetails } from '../../../features/types';
 import { useAuth } from '../../../features/users/useAuth';
 
 const pause = (time: number) =>
@@ -38,7 +38,7 @@ const pause = (time: number) =>
 const FormDetails = () => {
   const { handleChange, values } = useFormikContext<FormDetails>();
   return (
-    <Box maxW={'3xl'}>
+    <Box maxW="3xl">
       <Text
         fontWeight='600'
         color='white'
@@ -297,11 +297,11 @@ const NewForm = () => {
                                     data: '',
                                   });
                                 }}
-                                bg={'transparent'}
+                                bg="transparent"
                                 _hover={{bg: 'white', color: 'dark.1'}}
-                                border={'1px'}
-                                borderColor={'white'}
-                                borderRadius={'lg'}
+                                border="1px"
+                                borderColor="white"
+                                borderRadius="lg"
                                 color='white'
                                 size='md'
                               >

@@ -49,11 +49,11 @@ const CustomSelect: FC<FieldHookConfig<string>> = ({ ...props }) => {
       _hover={{ bg: 'transparent' }}
       _selected={{ bg: 'white', color: 'dark.1' }}
       bg='transparent'
-      border={'1px'}
-      borderColor={'white'}
+      border="1px"
+      borderColor="white"
       color='white'
       variant='filled'
-      fontSize={'xl'}
+      fontSize="xl"
       w='sm'
     >
       {props.children}
@@ -74,7 +74,7 @@ const FormCreationCard = ({ index }: QuestionCardProps) => {
       maxWidth='3xl'
       borderRadius='md'
       p={5}
-      bg={'dark.1'}
+      bg="dark.1"
       boxShadow="lg"
     >
       <HStack w='full'>
@@ -128,8 +128,8 @@ const FormCreationCard = ({ index }: QuestionCardProps) => {
           <IconButton
             size='lg'
             color='white'
-            borderColor={'white'}
-            border={'1px'}
+            borderColor="white"
+            border="1px"
             bg='transparent'
             _hover={{ bg: 'white', color: 'dark.1' }}
             aria-label='Duplicate'

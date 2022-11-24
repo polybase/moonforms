@@ -14,7 +14,7 @@ export function useLogin() {
     const user = await userCollection
       .record(accountAddress)
       .get()
-      .catch(() => null);
+    console.log('accountAddress', accountAddress, user)
     if (!user) {
       return {createNewUser: true, wallet:  Wallet.generate()}
     } else {
@@ -30,6 +30,8 @@ export function useLogin() {
     const accounts = await eth.requestAccounts();
     const accountAddress = accounts[0];
     const user = await getWalletAccount(accountAddress);
+
+    console.log(user.createNewUser, accountAddress, user.wallet.getPublicKeyString())
 
     db.signer(async (data) => {
       return {

@@ -40,10 +40,10 @@ const FormPreviewCard = ({ form }: FormPreviewCardProps) => {
       maxWidth='full'
       maxH='full'
       padding={7}
-      borderRadius={'md'}
+      borderRadius="md"
       border='1px'
       borderColor='rgb(255,255,255, 0.1)'
-      bg={'dark.1'}
+      bg="dark.1"
     >
       <VStack display='flex' alignItems='left'>
         <HStack mb={1} ml={1} display='flex'>

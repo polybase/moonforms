@@ -1,15 +1,13 @@
+import {usePolybase} from "@polybase/react";
+import { decodeFromString,
+  secp256k1
+} from '@polybase/util';
+import {useRouter} from "next/router";
+import {useCallback, useEffect, useState} from "react";
+
 import {Layout} from "../../../features/common/Layout";
 import {ResponseRecord, ResponseUserRecord} from "../../../features/types";
-import {usePolybase} from "@polybase/react";
-import {useCallback, useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import {useAuth} from "../../../features/users/useAuth";
-import {
-  secp256k1,
-  aescbc, decodeFromString,
-  encodeToString,
-  x25519xsalsa20poly1305
-} from '@polybase/util';
 
 const FormResponses = () => {
   const router = useRouter();
