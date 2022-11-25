@@ -102,7 +102,7 @@ const Home: NextPage = () => {
               </Heading>
               <Box maxW='container.md' pt={8}>
                 <Heading color='gray.200' fontSize={{ base: 'xl', lg: '3xl' }} as='h2' fontWeight='400'>
-                  The most privacy protecting & censorship resistant forms
+                  The most private & censorship resistant forms
                 </Heading>
               </Box>
               <Button
