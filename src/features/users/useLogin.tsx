@@ -1,28 +1,33 @@
 import * as eth from '@polybase/eth';
-import {usePolybase} from '@polybase/react';
+import { usePolybase } from '@polybase/react';
 import Wallet from 'ethereumjs-wallet';
 
-import {useAuth} from './useAuth';
-import {UserRecord} from '../types';
+import { useAuth } from './useAuth';
+import { UserRecord } from '../types';
 
 export function useLogin() {
   const { login } = useAuth();
   const db = usePolybase();
   const userCollection = db.collection<UserRecord>('user');
 
-  const getWalletAccount = async (accountAddress: string): Promise<{ createNewUser: boolean, wallet: Wallet }> => {
+  const getWalletAccount = async (
+    accountAddress: string
+  ): Promise<{ createNewUser: boolean; wallet: Wallet }> => {
     const user = await userCollection
       .record(accountAddress)
       .get()
       .catch(() => null);
     if (!user) {
-      return {createNewUser: true, wallet:  Wallet.generate()}
+      return { createNewUser: true, wallet: Wallet.generate() };
     } else {
       const privateKey = await eth.decrypt(
         user.data.encryptedPrivateKey,
         accountAddress
       );
-      return {createNewUser: false, wallet: Wallet.fromPrivateKey(Buffer.from(privateKey, 'hex'))}
+      return {
+        createNewUser: false,
+        wallet: Wallet.fromPrivateKey(Buffer.from(privateKey, 'hex')),
+      };
     }
   };
 
@@ -42,7 +47,11 @@ export function useLogin() {
       const privateKeyBuff = user.wallet.getPrivateKey();
       const privateKey = privateKeyBuff.toString('hex');
       const encryptedPrivateKey = await eth.encrypt(privateKey, accountAddress);
-      await userCollection.create([accountAddress, encryptedPrivateKey, user.wallet.getPublicKey().toString('hex')]);
+      await userCollection.create([
+        accountAddress,
+        encryptedPrivateKey,
+        user.wallet.getPublicKey().toString('hex'),
+      ]);
     }
 
     await login(accountAddress, user.wallet);

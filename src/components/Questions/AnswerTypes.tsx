@@ -1,7 +1,7 @@
 import {
   Box,
-  Checkbox, CheckboxGroup,
-  HStack,
+  Checkbox,
+  CheckboxGroup,
   Input,
   Radio,
   RadioGroup,
@@ -39,7 +39,7 @@ export function ShortTextAnswer({
         setTextResponse(e.target.value);
         updateAnswer();
       }}
-      color={'white'}
+      color='white'
       variant='flushed'
       placeholder='Your answer'
       type='text'
@@ -47,10 +47,7 @@ export function ShortTextAnswer({
   );
 }
 
-export function EmailAnswer({
-  question,
-  questionIndex,
-}: AnswerTypeProps): ReactElement {
+export function EmailAnswer({ questionIndex }: AnswerTypeProps): ReactElement {
   const [emailResponse, setEmailResponse] = useState<string>('');
   const formikCtx = useFormikContext<ResponseDetails>();
 
@@ -64,7 +61,7 @@ export function EmailAnswer({
         updateAnswer();
       }}
       _placeholder={{ color: 'gray.400' }}
-      color={'purple.3'}
+      color='purple.3'
       variant='flushed'
       placeholder='Your email'
       type='email'
@@ -78,10 +75,13 @@ export function DateAnswer({ questionIndex }: AnswerTypeProps): ReactElement {
   return (
     <Input
       onChange={(e) => {
-        formikCtx.setFieldValue(`answers.${questionIndex}.data`, e.target.value);
+        formikCtx.setFieldValue(
+          `answers.${questionIndex}.data`,
+          e.target.value
+        );
       }}
       _placeholder={{ color: 'gray.400' }}
-      color={'purple.3'}
+      color='purple.3'
       variant='flushed'
       type='datetime-local'
     />
@@ -89,19 +89,34 @@ export function DateAnswer({ questionIndex }: AnswerTypeProps): ReactElement {
 }
 
 export function CheckboxAnswer({
-  question, questionIndex }: AnswerTypeProps): ReactElement {
+  question,
+  questionIndex,
+}: AnswerTypeProps): ReactElement {
   const checkBoxQuestions = JSON.parse(question.data) as CheckboxOption[];
   const formikCtx = useFormikContext<ResponseDetails>();
 
   return (
     <Box maxW='2xl' p={2}>
       <VStack display='flex' alignItems='start' w='full'>
-        <CheckboxGroup onChange={(value) => {
-          formikCtx.setFieldValue(`answers.${questionIndex}.data`, JSON.stringify(value));
-        }}>
+        <CheckboxGroup
+          onChange={(value) => {
+            formikCtx.setFieldValue(
+              `answers.${questionIndex}.data`,
+              JSON.stringify(value)
+            );
+          }}
+        >
           {checkBoxQuestions.map((option, index) => {
             return (
-              <Checkbox value={option.title}key={index} color='white' colorScheme='purple' size='lg'>{option.title}</Checkbox>
+              <Checkbox
+                value={option.title}
+                key={index}
+                color='white'
+                colorScheme='purple'
+                size='lg'
+              >
+                {option.title}
+              </Checkbox>
             );
           })}
         </CheckboxGroup>
@@ -123,14 +138,21 @@ export function MultipleChoiceAnswer({
     <Box maxW='2xl' p={2}>
       <VStack display='flex' alignItems='start' w='full'>
         <Box w='full'>
-          <RadioGroup onChange={(nextValue) => {
-            formikCtx.setFieldValue(`answers.${questionIndex}.data`, nextValue);
-          }}>
+          <RadioGroup
+            onChange={(nextValue) => {
+              formikCtx.setFieldValue(
+                `answers.${questionIndex}.data`,
+                nextValue
+              );
+            }}
+          >
             <Stack direction='column'>
               {multipleChoiceOptions.map((option, index) => {
                 return (
                   <Radio key={index} colorScheme='purple' value={option.title}>
-                    <Text color={"white"} fontSize={'lg'}>{option.title}</Text>
+                    <Text color='white' fontSize='lg'>
+                      {option.title}
+                    </Text>
                   </Radio>
                 );
               })}
@@ -142,10 +164,9 @@ export function MultipleChoiceAnswer({
   );
 }
 
-export function LinearScaleAnswer({
-  questionIndex,
-}: AnswerTypeProps): ReactElement {
+export function LinearScaleAnswer({ question }: AnswerTypeProps): ReactElement {
   const formikCtx = useFormikContext<ResponseDetails>();
+  console.log(question);
   // console.log(formikCtx.values.questions[questionIndex].data);
   // const [checkboxOptions, setCheckboxOptions] = useState<CheckboxOption[]>([
   //   { title: 'Option 1' },

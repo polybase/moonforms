@@ -1,13 +1,25 @@
-import {Alert, Box, Button, Container, Fade, Icon, Text, VStack} from '@chakra-ui/react';
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Fade,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import { CollectionRecordResponse } from '@polybase/client';
-import * as eth from '@polybase/eth';
 import { usePolybase } from '@polybase/react';
+import {
+  aescbc,
+  decodeFromString,
+  encodeToString,
+  secp256k1,
+} from '@polybase/util';
 import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import { map } from 'lodash';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { aescbc, secp256k1, x25519xsalsa20poly1305, decodeFromString, encodeToString } from '@polybase/util'
 
 import ResponseQuestion from '../../components/Questions/ResponseCard';
 import { Layout } from '../../features/common/Layout';
@@ -84,9 +96,15 @@ const FormResponsePage = () => {
     setFormSubmitting(true);
 
     for (let i = 0; i < values.answers.length; i++) {
-      const question = questions?.find(q => q.data.id === values.answers[i].questionId);
+      const question = questions?.find(
+        (q) => q.data.id === values.answers[i].questionId
+      );
       if (question?.data.required === 'true') {
-        if (values.answers[i].data === '' || values.answers[i].type === 'checkbox' && values.answers[i].data === '[]') {
+        if (
+          values.answers[i].data === '' ||
+          (values.answers[i].type === 'checkbox' &&
+            values.answers[i].data === '[]')
+        ) {
           canSubmitForm = false;
         }
       }
@@ -96,10 +114,10 @@ const FormResponsePage = () => {
       setAlertDetails({
         show: true,
         type: 'error',
-        message: 'Answer all of the required questions to submit the form'
-      })
-      await pause(300)
-      setFormSubmitting(false)
+        message: 'Answer all of the required questions to submit the form',
+      });
+      await pause(300);
+      setFormSubmitting(false);
     }
 
     const responseId = nanoid();
@@ -108,9 +126,13 @@ const FormResponsePage = () => {
     _values.id = responseId;
     _values.form = formId;
 
-    const symmetricKey = aescbc.generateSecretKey()
+    const symmetricKey = aescbc.generateSecretKey();
 
-    const encryptedResponse = await aescbc.symmetricEncryptToEncoding(symmetricKey, JSON.stringify(_values.answers), 'base64')
+    const encryptedResponse = await aescbc.symmetricEncryptToEncoding(
+      symmetricKey,
+      JSON.stringify(_values.answers),
+      'base64'
+    );
 
     await responseCollection.create([
       responseId,
@@ -122,8 +144,13 @@ const FormResponsePage = () => {
     const createdUserResponses = authorizedUsers.map(async (user, index) => {
       const { id: userId, publicKey } = user.data;
 
-      const decodedPublicKeyStr = decodeFromString(publicKey, 'hex')
-      const encryptedSymmetricKeyWithUsersPublicKey = await secp256k1.asymmetricEncryptToEncoding(decodedPublicKeyStr, encodeToString(symmetricKey, 'hex'), 'base64')
+      const decodedPublicKeyStr = decodeFromString(publicKey, 'hex');
+      const encryptedSymmetricKeyWithUsersPublicKey =
+        await secp256k1.asymmetricEncryptToEncoding(
+          decodedPublicKeyStr,
+          encodeToString(symmetricKey, 'hex'),
+          'base64'
+        );
 
       return responseUserCollection.create([
         nanoid(),
@@ -137,8 +164,8 @@ const FormResponsePage = () => {
     setAlertDetails({
       show: true,
       type: 'success',
-      message: '🎉 Your response has been submitted'
-    })
+      message: '🎉 Your response has been submitted',
+    });
     setFormSubmitting(false);
     helpers.resetForm();
   };
@@ -156,16 +183,19 @@ const FormResponsePage = () => {
           display='flex'
           flexDirection='column'
         >
-
           <Box
             w='full'
             borderRadius='md'
             maxWidth='container.lg'
-            boxShadow={'md'}
-            bgGradient={'radial-gradient(78.9% 78.52% at 24.68% 21.48%, #2C2E30 0%, #1E2124 100%)'}
+            boxShadow='md'
+            bgGradient='radial-gradient(78.9% 78.52% at 24.68% 21.48%, #2C2E30 0%, #1E2124 100%)'
             p={8}
           >
-            <Text color='white' fontWeight={700} fontSize={{base: '2xl', lg: '5xl'}}>
+            <Text
+              color='white'
+              fontWeight={700}
+              fontSize={{ base: '2xl', lg: '5xl' }}
+            >
               {formRecord?.data.title}
             </Text>
             <Text color='gray.300' as='p' fontSize='md'>
@@ -177,17 +207,15 @@ const FormResponsePage = () => {
               <Fade in={alertDetails.show} unmountOnExit={true}>
                 <Alert
                   rounded='lg'
-                  fontSize={'lg'}
+                  fontSize='lg'
                   fontWeight={500}
                   color={
                     alertDetails.type === 'error' ? 'red.800' : 'green.800'
                   }
                   status={alertDetails.type}
-                  w={'full'}
+                  w='full'
                 >
-                  <Text>
-                    {alertDetails.message}
-                  </Text>
+                  <Text>{alertDetails.message}</Text>
                 </Alert>
               </Fade>
             )}
@@ -233,10 +261,24 @@ const FormResponsePage = () => {
               )}
             </Formik>
           </Box>
-          <Box pb={14} display={'flex'} alignItems={'center'} alignContent={'center'} justifyContent={'center'} mt={20} w={'full'}>
+          <Box
+            pb={14}
+            display='flex'
+            alignItems='center'
+            alignContent='center'
+            justifyContent='center'
+            mt={20}
+            w='full'
+          >
             <VStack>
-              <Text mt={5} color={'gray.500'}>The content of this response is encrypted and can only be viewed by you and the forms owner</Text>
-              <Text  color={'gray.600'} fontWeight={700}> Powered by Polybase</Text>
+              <Text mt={5} color='gray.500'>
+                The content of this response is encrypted and can only be viewed
+                by you and the forms owner
+              </Text>
+              <Text color='gray.600' fontWeight={700}>
+                {' '}
+                Powered by Polybase
+              </Text>
             </VStack>
           </Box>
         </VStack>

@@ -1,4 +1,4 @@
-import {Center, Spinner, SpinnerProps, Text, VStack} from '@chakra-ui/react';
+import { Center, Spinner, SpinnerProps, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 export interface LoadingProps extends SpinnerProps {
@@ -43,7 +43,9 @@ export const Loading: React.FC<LoadingProps> = ({
               color='dark.1'
               size='xl'
             />
-            <Text fontSize={'2xl'} fontWeight={600} color={'white'}>Loading...</Text>
+            <Text fontSize='2xl' fontWeight={600} color='white'>
+              Loading...
+            </Text>
           </VStack>
         </Center>
       );
