@@ -43,7 +43,6 @@ export interface ResponseUserRecord {
   encryptedEncryptionKey: string;
 }
 
-
 export interface ResponseDetails {
   id: string;
   form: string;

@@ -35,14 +35,18 @@ const ResponseCard = ({ question, index }: ResponseQuestionProps) => {
       mt={4}
       maxWidth='full'
       borderRadius='md'
-      boxShadow={'md'}
+      boxShadow='md'
       p={6}
       border='2px'
       borderColor='rgb(255,255,255, 0.05)'
       bg='dark.1'
     >
       <HStack w='full'>
-        <Text color='white' fontWeight={600} fontSize={{base: 'lg', lg: '2xl'}}>
+        <Text
+          color='white'
+          fontWeight={600}
+          fontSize={{ base: 'lg', lg: '2xl' }}
+        >
           {question.title}
         </Text>
         {question.required === 'true' ? (
