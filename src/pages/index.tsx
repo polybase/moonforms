@@ -102,7 +102,7 @@ const Home: NextPage = () => {
               </Heading>
               <Box maxW='container.md' pt={8}>
                 <Heading color='gray.200' fontSize={{ base: 'xl', lg: '3xl' }} as='h2' fontWeight='400'>
-                  The most private & censorship resistant forms
+                  Moonforms is end-to-end encrypted, censorship resistant and self-sovereign.
                 </Heading>
               </Box>
               <Button
