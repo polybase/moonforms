@@ -165,7 +165,7 @@ const Home: NextPage = () => {
                     </Box>
                           )
                         })}
-                    
+
                   </Stack>
                 </Box>
                   )
@@ -259,9 +259,9 @@ const Home: NextPage = () => {
       <Box textColor='white' mt={24} p={3} w='full'>
         <Marquee gradient={false}>
           <HStack spacing={12} pl={12}>
-            {MARQUEE_MESSAGES.map((m) => {
+            {MARQUEE_MESSAGES.map((m, index) => {
               return (
-                <>
+                <HStack key={`marquee_${index}`}>
                 <Text fontSize='xl' fontWeight={500}>
                 {m}
               </Text>
@@ -270,7 +270,7 @@ const Home: NextPage = () => {
               >
                 ✦
                     </Text>
-                  </>
+                  </HStack>
                 )
             })}
             <Text fontSize='xl' fontWeight={500}>
