@@ -14,9 +14,9 @@ import '@fontsource/lora/400.css';
 import { AuthProvider } from '../features/users/AuthProvider';
 import { theme } from '../styles/theme';
 
-const polybase = new Polybase({ 
-  baseURL: 'http://localhost:8080/v0',
-  defaultNamespace: 'formsTesting_4' 
+const polybase = new Polybase({
+  // baseURL: 'http://localhost:8080/v0',
+  defaultNamespace: 'formsTesting_4'
 });
 function MyApp({ Component, pageProps }: AppProps) {
   return (
