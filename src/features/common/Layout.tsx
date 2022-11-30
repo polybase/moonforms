@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import Head from 'next/head'
 import { useRouter } from 'next/router';
-import { CaretDown, House, SignOut } from 'phosphor-react';
+import { CaretDown, House, ListBullets, SignOut } from 'phosphor-react';
 import React from 'react';
 
 import { shortEthAddress } from './utils';
@@ -85,16 +85,21 @@ export function Layout({ children, isLoading }: LayoutProps) {
                     onClick={() => {
                       router.push('/dashboard');
                     }}
-                    icon={
-                      <Icon
-                        fontSize='20px'
-                        weight='bold'
-                        strokeWidth={124}
-                        as={House}
-                      />
-                    }
+                    icon={<Icon fontSize='20px' weight='bold' as={House} />}
                   >
                     Dashboard
+                  </MenuItem>
+                  <MenuItem
+                    color='black'
+                    onClick={async () => {
+                      await router.push('/responses');
+                    }}
+                    _hover={{ bg: 'grey.500' }}
+                    icon={
+                      <Icon fontSize='20px' weight='bold' as={ListBullets} />
+                    }
+                  >
+                    My responses
                   </MenuItem>
                   <MenuItem
                     color='black'
@@ -103,14 +108,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
                       await logout();
                       await router.push('/');
                     }}
-                    icon={
-                      <Icon
-                        fontSize='20px'
-                        weight='bold'
-                        strokeWidth={124}
-                        as={SignOut}
-                      />
-                    }
+                    icon={<Icon fontSize='20px' weight='bold' as={SignOut} />}
                   >
                     Logout
                   </MenuItem>

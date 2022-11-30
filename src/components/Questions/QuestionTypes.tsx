@@ -40,7 +40,7 @@ export function ShortTextQuestion({
 }: QuestionTypeProps): ReactElement {
   return (
     <Input
-      color="white"
+      color='white'
       variant='flushed'
       placeholder='Short text answer'
       disabled={disabled}
@@ -52,7 +52,7 @@ export function ShortTextQuestion({
 export function EmailQuestion({ disabled }: QuestionTypeProps): ReactElement {
   return (
     <Input
-      color="white"
+      color='white'
       variant='flushed'
       placeholder='Email answer'
       disabled={disabled}
@@ -106,7 +106,7 @@ export function CheckboxQuestion({
           {checkboxOptions.map((option, index) => {
             return (
               <HStack mt={2} key={index}>
-                <Checkbox  colorScheme='purple' size='lg' disabled={disabled} />
+                <Checkbox colorScheme='purple' size='lg' disabled={disabled} />
                 <Input
                   onChange={(e) => {
                     const newArr = [...checkboxOptions];
@@ -114,7 +114,7 @@ export function CheckboxQuestion({
                     setCheckboxOptions(newArr);
                     updateQuestionData();
                   }}
-                  color="white"
+                  color='white'
                   variant='flushed'
                   placeholder={`Option ${index + 1}`}
                   type='text'
@@ -174,7 +174,7 @@ export function MultipleChoiceQuestion({
                     setChoices(newArr);
                     updateQuestionData();
                   }}
-                  color="white"
+                  color='white'
                   variant='flushed'
                   placeholder={`Option ${index + 1}`}
                   type='text'

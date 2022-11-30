@@ -20,7 +20,7 @@ import {
   FormikHelpers,
   useFormikContext,
 } from 'formik';
-import {map} from 'lodash';
+import { map } from 'lodash';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/router';
 import { ArrowUpRight, Plus } from 'phosphor-react';
@@ -29,7 +29,11 @@ import React, { useEffect, useState } from 'react';
 import FormCreationCard from '../../../components/Questions/FormCreationCard';
 import { initialFormValue } from '../../../features/common/formik';
 import { Layout } from '../../../features/common/Layout';
-import { AlertDetails,FormDetails, QuestionDetails } from '../../../features/types';
+import {
+  AlertDetails,
+  FormDetails,
+  QuestionDetails,
+} from '../../../features/types';
 import { useAuth } from '../../../features/users/useAuth';
 
 const pause = (time: number) =>
@@ -38,14 +42,8 @@ const pause = (time: number) =>
 const FormDetails = () => {
   const { handleChange, values } = useFormikContext<FormDetails>();
   return (
-    <Box maxW="3xl">
-      <Text
-        fontWeight='600'
-        color='white'
-        mb={1}
-        fontSize='xl'
-        as={FormLabel}
-      >
+    <Box maxW='3xl'>
+      <Text fontWeight='600' color='white' mb={1} fontSize='xl' as={FormLabel}>
         Title
       </Text>
 
@@ -56,7 +54,7 @@ const FormDetails = () => {
         borderColor='white'
         fontSize='xl'
         p={6}
-        boxShadow="md"
+        boxShadow='md'
         w={{ base: 'full', sm: 'lg', md: 'lg', lg: '3xl' }}
         placeholder='Untitled form'
         type='text'
@@ -75,7 +73,7 @@ const FormDetails = () => {
       </Text>
       <Textarea
         px={6}
-        boxShadow="md"
+        boxShadow='md'
         fontSize='xl'
         color='white'
         focusBorderColor='white'
@@ -198,20 +196,17 @@ const NewForm = () => {
   };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     if (!auth) {
       router.push('/');
       return;
     }
-    setLoading(false)
+    setLoading(false);
   }, [auth, router]);
   return (
-    <Layout isLoading={loading} >
+    <Layout isLoading={loading}>
       <Container maxWidth='container.xl'>
-        <VStack
-          display='flex'
-          maxW='full'
-        >
+        <VStack display='flex' maxW='full'>
           <Box
             display='flex'
             w='full'
@@ -271,7 +266,7 @@ const NewForm = () => {
                 onSubmit={handleSubmitForm}
               >
                 {({ values }) => (
-                  <Box pb={3}  maxWidth='3xl' display='flex' alignItems='center'>
+                  <Box pb={3} maxWidth='3xl' display='flex' alignItems='center'>
                     <Form>
                       <FormDetails />
                       <Box mt={10} mb={5}>
@@ -297,11 +292,11 @@ const NewForm = () => {
                                     data: '',
                                   });
                                 }}
-                                bg="transparent"
-                                _hover={{bg: 'white', color: 'dark.1'}}
-                                border="1px"
-                                borderColor="white"
-                                borderRadius="lg"
+                                bg='transparent'
+                                _hover={{ bg: 'white', color: 'dark.1' }}
+                                border='1px'
+                                borderColor='white'
+                                borderRadius='lg'
                                 color='white'
                                 size='md'
                               >

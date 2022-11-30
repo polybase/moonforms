@@ -1,13 +1,19 @@
-import {usePolybase} from "@polybase/react";
-import { decodeFromString,
-  secp256k1
-} from '@polybase/util';
-import {useRouter} from "next/router";
-import {useCallback, useEffect, useState} from "react";
+import { Box, Container, Text, VStack } from '@chakra-ui/react';
+import { usePolybase } from '@polybase/react';
+import { aescbc, decodeFromString, secp256k1 } from '@polybase/util';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 
-import {Layout} from "../../../features/common/Layout";
-import {ResponseRecord, ResponseUserRecord} from "../../../features/types";
-import {useAuth} from "../../../features/users/useAuth";
+import FormResponsesTable from '../../../components/Responses/FormResponsesTable';
+import { Layout } from '../../../features/common/Layout';
+import {
+  FormAnswers,
+  QuestionAnswer,
+  QuestionRecord,
+  ResponseRecord,
+  ResponseUserRecord,
+} from '../../../features/types';
+import { useAuth } from '../../../features/users/useAuth';
 
 const FormResponses = () => {
   const router = useRouter();
@@ -15,47 +21,92 @@ const FormResponses = () => {
   const { auth } = useAuth();
 
   const [formId, setFormId] = useState<string>(router.query.id as string);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [questionResponses, setQuestionResponses] = useState<FormAnswers[]>([]);
+  const responseCollectionRef = polybase.collection<ResponseRecord>('response');
+  const responseUserCollectionRef =
+    polybase.collection<ResponseUserRecord>('responseUser');
+  const questionCollectionRef = polybase.collection<QuestionRecord>('question');
 
-  const responseCollectionReference = polybase.collection<ResponseRecord>('response');
-  const responseUserCollectionReference = polybase.collection<ResponseUserRecord>('responseUser');
+  const queryCollections = useCallback(
+    async (formId: string) => {
+      if (!auth) throw new Error('You are not authenticated');
+      try {
+        const responsesCollection = await responseCollectionRef.get();
+        const userResponsesCollection = await responseUserCollectionRef.get();
+        const questionsCollection = await questionCollectionRef.get();
+        const formResponses = responsesCollection.data.filter(
+          (r) => r.data.formId === formId
+        );
 
-  const queryCollections = useCallback(async (formId: string) => {
-    if (!auth) throw new Error('You are not authenticated');
+        const userResponses = formResponses.map((resp) => {
+          return {
+            // get the user response where user id == owner address && response id == resp id
+            userResponse: userResponsesCollection.data.find(
+              (r) =>
+                r.data.responseId === resp.data.id &&
+                r.data.userId === auth.accountAddress
+            ),
+            encryptedData: resp.data.encryptedData,
+          };
+        });
 
-    const responsesCollection = await responseCollectionReference.get();
-    const userResponsesCollection = await responseUserCollectionReference.get();
+        const decryptedResponses = userResponses.map(async (resp) => {
+          const decodedPrivateKey = decodeFromString(
+            auth.walletAccount.getPrivateKeyString(),
+            'hex'
+          );
+          const symmetricKey = await secp256k1.asymmetricDecryptFromEncoding(
+            decodedPrivateKey,
+            resp?.userResponse?.data.encryptedEncryptionKey as string,
+            'base64'
+          );
+          return await aescbc.symmetricDecryptFromEncoding(
+            decodeFromString(symmetricKey, 'hex'),
+            resp.encryptedData,
+            'base64'
+          );
+        });
 
-    const formResponses = responsesCollection.data.filter(r => r.data.formId === formId)
+        const responses = await Promise.all(decryptedResponses);
+        // todo show question titles as columns and answers as rows
+        console.log(responses.map(r => JSON.parse(r) as QuestionAnswer[]))
 
-    const userResponses = formResponses.map((resp) => {
-      // get the user response where user id == owner address && response id == resp id
-      return userResponsesCollection.data.find(r => r.data.responseId === resp.data.id && r.data.userId === auth.accountAddress)
-    });
-
-
-    const decryptedKeys = userResponses.map(async (resp) => {
-      if (typeof resp !== 'undefined') {
-        if (resp.data.id !== "y2KKe8FynyXoeMsaGZSYR") {
-          const decodedPrivateKey = decodeFromString(auth.walletAccount.getPrivateKeyString(), 'hex');
-          const symmetricKey = await secp256k1.asymmetricDecryptFromEncoding(decodedPrivateKey, resp.data.encryptedEncryptionKey, 'base64')
-          console.log(symmetricKey)
-        }
-      }
-    })
-  }, [auth, responseCollectionReference, responseUserCollectionReference]);
-
-
+        setLoading(false);
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
+    },
+    [
+      auth,
+      questionCollectionRef,
+      responseCollectionRef,
+      responseUserCollectionRef,
+    ]
+  );
 
   useEffect(() => {
     setFormId(router.query.id as string);
     queryCollections(formId).catch(() => null);
-  }, [formId, queryCollections, router.query.id])
+  }, [formId, queryCollections, router.query.id]);
 
   return (
-    <Layout isLoading={true}>
-      aslkdjalsdk
+    <Layout isLoading={loading}>
+      <Container mt={10} maxWidth='container.lg'>
+        <VStack
+          alignItems='start'
+          display='flex'
+          flexDirection='column'
+          spacing={12}
+        >
+          <Box w='full'>
+            {/*<VStack mt={2} alignItems='start' w='full' spacing={32}>*/}
+            {/*  <FormResponsesTable questionAnswers={questionResponses} />*/}
+            {/*</VStack>*/}
+          </Box>
+        </VStack>
+      </Container>
     </Layout>
-  )
+  );
 };
 
 export default FormResponses;

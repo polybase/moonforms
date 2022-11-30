@@ -82,7 +82,12 @@ const Dashboard = () => {
                   justifyContent='center'
                   mt={4}
                 >
-                  <Text fontSize="xl" fontWeight={500} textAlign='center' color='white'>
+                  <Text
+                    fontSize='xl'
+                    fontWeight={500}
+                    textAlign='center'
+                    color='white'
+                  >
                     🌙 No forms to moon here!
                   </Text>
                 </Box>

@@ -1,3 +1,11 @@
+type QuestionTypes =
+  | 'date'
+  | 'checkbox'
+  | 'email'
+  | 'short-text'
+  | 'multiple-choice'
+  | 'linear-scale';
+
 // Represents a record from the User collection
 export interface UserRecord {
   id: string;
@@ -32,7 +40,7 @@ export interface QuestionRecord {
 export interface ResponseRecord {
   id: string;
   formId: string;
-  data: string;
+  encryptedData: string;
   createdAt: string;
 }
 // Represents a record from the ResponseUser collection
@@ -42,7 +50,6 @@ export interface ResponseUserRecord {
   responseId: string;
   encryptedEncryptionKey: string;
 }
-
 
 export interface ResponseDetails {
   id: string;
@@ -66,13 +73,7 @@ export interface FormDetails {
 export interface QuestionDetails {
   id: string;
   title: string;
-  type:
-    | 'date'
-    | 'checkbox'
-    | 'email'
-    | 'short-text'
-    | 'multiple-choice'
-    | 'linear-scale';
+  type: QuestionTypes;
   required: boolean;
   data: string;
 }
@@ -94,4 +95,15 @@ export interface AlertDetails {
   show: boolean;
   message: string;
   type: 'success' | 'error';
+}
+
+export interface FormAnswers {
+  title: string;
+  questionId: string;
+  answers: QuestionAnswer[];
+}
+
+export interface SubmittedUserResponse {
+  formTitle: string;
+  decryptedResponse: QuestionAnswer[];
 }
