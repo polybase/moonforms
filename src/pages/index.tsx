@@ -4,30 +4,24 @@ import {
   Container,
   HStack,
   Image,
+  Modal,
   Spacer,
   Stack,
   Text,
+  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
 import React from 'react';
 import Marquee from 'react-fast-marquee';
 
+import AuthModal from '../components/Auth/AuthModal';
 import { Layout } from '../features/common/Layout';
-import { useAuth } from '../features/users/useAuth';
-import { useLogin } from '../features/users/useLogin';
 const Home: NextPage = () => {
-  const { auth } = useAuth();
-  const login = useLogin();
-  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleGetStartedClick = async () => {
-    if (!auth) {
-      await login();
-      await router.push('/dashboard');
-    }
-    await router.push('/dashboard');
+    onOpen();
   };
 
   return (
@@ -35,6 +29,9 @@ const Home: NextPage = () => {
       <Layout>
         <VStack spacing={{ base: 10, md: 44, lg: 44 }}>
           <Container maxWidth='container.xl' mt={36}>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <AuthModal />
+            </Modal>
             <Box
               alignItems='center'
               textAlign='center'

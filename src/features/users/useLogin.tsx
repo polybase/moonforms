@@ -1,9 +1,19 @@
-import * as eth from '@polybase/eth';
+import Web3 from 'web3';
 import { usePolybase } from '@polybase/react';
+import { ConnectExtension } from "@magic-ext/connect";
+import * as eth from '@polybase/eth';
 import Wallet from 'ethereumjs-wallet';
+import { Magic } from 'magic-sdk';
 
 import { useAuth } from './useAuth';
 import { UserRecord } from '../types';
+import {walletAccountLocalStorageKey} from "../common/utils";
+
+type LoginType = 'google' | 'email' | 'metamask';
+interface LoginProps {
+  loginType: LoginType
+  email: string;
+}
 
 export function useLogin() {
   const { login } = useAuth();
@@ -31,29 +41,43 @@ export function useLogin() {
     }
   };
 
-  return async () => {
-    const accounts = await eth.requestAccounts();
-    const accountAddress = accounts[0];
-    const user = await getWalletAccount(accountAddress);
+  const getAccountAddress = async (loginProps: LoginProps) => {
+    try {
+      const magicAuth = new Magic('pk_live_C8D6B4E0E1EBCBF5', {
+        network: "mainnet",
+      });
 
-    db.signer(async (data) => {
-      return {
-        h: 'eth-personal-sign',
-        sig: eth.ethPersonalSign(user.wallet.getPrivateKey(), data),
-      };
-    });
+      await magicAuth.auth.loginWithMagicLink({email: loginProps.email});
+      const metadata = await magicAuth.user.getMetadata();
 
-    if (user.createNewUser) {
-      const privateKeyBuff = user.wallet.getPrivateKey();
-      const privateKey = privateKeyBuff.toString('hex');
-      const encryptedPrivateKey = await eth.encrypt(privateKey, accountAddress);
-      await userCollection.create([
-        accountAddress,
-        encryptedPrivateKey,
-        user.wallet.getPublicKey().toString('hex'),
-      ]);
-    }
+      console.log('logged in', metadata.publicAddress);
+    } catch (e) {}
+  }
 
-    await login(accountAddress, user.wallet);
+  return async (loginProps: LoginProps) => {
+    await getAccountAddress(loginProps);
+    // const user = await getWalletAccount(accountAddress);
+    //
+    // localStorage.setItem(walletAccountLocalStorageKey, user.wallet.getPrivateKeyString());
+    //
+    // db.signer(async (data) => {
+    //   return {
+    //     h: 'eth-personal-sign',
+    //     sig: eth.ethPersonalSign(user.wallet.getPrivateKey(), data),
+    //   };
+    // });
+    //
+    // if (user.createNewUser) {
+    //   const privateKeyBuff = user.wallet.getPrivateKey();
+    //   const privateKey = privateKeyBuff.toString('hex');
+    //   const encryptedPrivateKey = await eth.encrypt(privateKey, accountAddress);
+    //   await userCollection.create([
+    //     accountAddress,
+    //     encryptedPrivateKey,
+    //     user.wallet.getPublicKey().toString('hex'),
+    //   ]);
+    // }
+    //
+    // await login(accountAddress, user.wallet);
   };
 }

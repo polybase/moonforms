@@ -3,6 +3,11 @@
 
 import Wallet from 'ethereumjs-wallet';
 import React, { createContext, useCallback, useMemo, useState } from 'react';
+import {
+  accountAddressLocalStorageKey,
+  isWalletConnectedLocalStorageKey,
+  walletAccountLocalStorageKey
+} from "../common/utils";
 
 export interface AuthContextValue {
   auth: { accountAddress: string; walletAccount: Wallet } | null;
@@ -22,14 +27,20 @@ export interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [auth, setAuth] = useState<AuthContextValue['auth']>(null);
+
   const login = useCallback(
     async (accountAddress: string, walletAccount: Wallet) => {
+      console.log('loggin in', accountAddress, walletAccount)
+      localStorage.setItem(isWalletConnectedLocalStorageKey, 'true');
       setAuth({ accountAddress, walletAccount });
     },
     []
   );
 
   const logout = useCallback(async () => {
+    localStorage.setItem(isWalletConnectedLocalStorageKey, 'false');
+    localStorage.setItem(walletAccountLocalStorageKey, '');
+    localStorage.setItem(accountAddressLocalStorageKey, '');
     setAuth(null);
   }, []);
 

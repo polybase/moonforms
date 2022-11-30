@@ -43,6 +43,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/react';
+import AuthModal from "../../components/Auth/AuthModal";
 
 export function Layout({ children, isLoading }: LayoutProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,80 +56,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
     <Flex height='100%' flexDirection='column'>
       <Container maxW='container.xl'>
         <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent p={8} bg='dark.1'>
-            <VStack display='flex' alignItems='center'>
-              <ModalCloseButton color='white' fontWeight={700} />
-              <ModalBody w='full'>
-                <VStack spacing={4}>
-                  <Text fontSize='sm' color='white' fontWeight={600}>
-                    Sign in to Moonforms
-                  </Text>
-                  <Button
-                    leftIcon={
-                      <Icon
-                        fontSize='20px'
-                        weight='bold'
-                        strokeWidth={124}
-                        as={GoogleLogo}
-                      />
-                    }
-                    _hover={{color:'green.900', bg: 'green.300'}}
-                    p={6}
-                    w='full'
-                    bg='transparent'
-                    border='2px'
-                    rounded={'2xl'}
-                    borderColor='green.300'
-                    color='white'
-                    fontWeight={500}
-                  >
-                    Sign in with Google
-                  </Button>
-                  <Button
-                    p={6}
-                    _hover={{color:'blue.900', bg: 'blue.300'}}
-                    w='full'
-                    fontWeight={500}
-                    color='white'
-                    bg='transparent'
-                    border='2px'
-                    rounded={'2xl'}
-                    borderColor='blue.300'
-                    leftIcon={
-                      <Icon
-                        fontSize='20px'
-                        weight='bold'
-                        strokeWidth={124}
-                        as={Envelope}
-                      />
-                    }
-                  >
-                    Sign in with Email
-                  </Button>
-                  <Text fontSize='md' color='white'>
-                    Or
-                  </Text>
-                  <Button
-                    p={6}
-                    w='full'
-                    fontWeight={500}
-                    border='2px'
-                    _hover={{color:'orange.900',bg: 'orange.300'}}
-                    bg='transparent'
-                    rounded={'2xl'}
-                    borderColor='orange.300'
-                    color={'white'}
-                    leftIcon={
-                      <Icon fontSize='20px' weight='bold' as={Wallet} />
-                    }
-                  >
-                    Connect your wallet
-                  </Button>
-                </VStack>
-              </ModalBody>
-            </VStack>
-          </ModalContent>
+          <AuthModal/>
         </Modal>
         <HStack p={4}>
           <Box>
