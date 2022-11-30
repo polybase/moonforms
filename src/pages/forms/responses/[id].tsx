@@ -69,28 +69,9 @@ const FormResponses = () => {
         });
 
         const responses = await Promise.all(decryptedResponses);
+        // todo show question titles as columns and answers as rows
+        console.log(responses.map(r => JSON.parse(r) as QuestionAnswer[]))
 
-        const formAnswers = questionsCollection.data
-          .filter((q) => q.data.formId === formId)
-          .map((r) => {
-            return {
-              title: r.data.title,
-              questionId: r.data.id,
-              answers: [] as QuestionAnswer[],
-            };
-          }) as FormAnswers[];
-
-        for (let i = 0; i < responses.length; i++) {
-          const response = JSON.parse(responses[i]) as QuestionAnswer[];
-          for (let j = 0; j < response.length; j++) {
-            const formAnswerIndex = formAnswers.findIndex(
-              (q) => q.questionId === response[j].questionId
-            );
-            formAnswers[formAnswerIndex].answers.push(response[j]);
-          }
-        }
-
-        setQuestionResponses(formAnswers);
         setLoading(false);
         // eslint-disable-next-line no-empty
       } catch (e) {}
@@ -118,18 +99,9 @@ const FormResponses = () => {
           spacing={12}
         >
           <Box w='full'>
-            {questionResponses.map((formAnswers, i) => {
-              return (
-                <Box key={`responses-${i}`}>
-                  <Text color='gray.200' fontSize='xl' fontWeight={500}>
-                    {formAnswers.title}
-                  </Text>
-                  <VStack mt={2} alignItems='start' w='full' spacing={32}>
-                    <FormResponsesTable questionAnswers={formAnswers.answers} />
-                  </VStack>
-                </Box>
-              );
-            })}
+            {/*<VStack mt={2} alignItems='start' w='full' spacing={32}>*/}
+            {/*  <FormResponsesTable questionAnswers={questionResponses} />*/}
+            {/*</VStack>*/}
           </Box>
         </VStack>
       </Container>
