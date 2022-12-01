@@ -21,51 +21,51 @@ import { useLogin } from '../features/users/useLogin';
 
 const BENEFITS = [
   {
-    title: "Cryptographically guaranteed privacy",
+    title: 'Cryptographically guaranteed privacy',
     breakdown: [
       {
-        text: "With Moonforms, only people with explicit permission can view responses.",
-        image: "/moon_emoji.svg"
+        text: 'With Moonforms, only people with explicit permission can view responses.',
+        image: '/moon_emoji.svg',
       },
       {
-        text: "In Google Forms, Typeform or Airtable, anyone at those companies can view the data.",
-        image: "/mask_emoji.svg"
-      }
-    ]
+        text: 'In Google Forms, Typeform or Airtable, anyone at those companies can view the data.',
+        image: '/mask_emoji.svg',
+      },
+    ],
   },
   {
-    title: "Censorship-resistant",
+    title: 'Censorship-resistant',
     breakdown: [
       {
-        text: "Moonforms forms and responses cannot be censored or taken down by corporations or governments.",
-        image: "/moon_emoji.svg"
+        text: 'Moonforms forms and responses cannot be censored or taken down by corporations or governments.',
+        image: '/moon_emoji.svg',
       },
       {
-        text: "This can happen with web2 forms that collect data that authoritarian governments don’t like.",
-        image: "/mask_emoji.svg"
-      }
-    ]
+        text: 'This can happen with web2 forms that collect data that authoritarian governments don’t like.',
+        image: '/mask_emoji.svg',
+      },
+    ],
   },
   {
-    title: "Linked to wallets and open source",
+    title: 'Linked to wallets and open source',
     breakdown: [
       {
-        text: "Respondents can view responses for all Moonforms they submit by logging in with their wallet.",
-        image: "/moon_emoji.svg"
+        text: 'Respondents can view responses for all Moonforms they submit by logging in with their wallet.',
+        image: '/moon_emoji.svg',
       },
       {
-        text: "In web2 forms, once the response is submitted respondents loose access to their data.",
-        image: "/mask_emoji.svg"
-      }
-    ]
+        text: 'In web2 forms, once the response is submitted respondents loose access to their data.',
+        image: '/mask_emoji.svg',
+      },
+    ],
   },
-]
+];
 
 const MARQUEE_MESSAGES = [
-  "Typeform is sooooo web2",
-  "Do you even decentralize bro?",
-  "Still using Google Forms?"
-]
+  'Typeform is sooooo web2',
+  'Do you even decentralize bro?',
+  'Still using Google Forms?',
+];
 
 const Home: NextPage = () => {
   const { auth } = useAuth();
@@ -83,8 +83,35 @@ const Home: NextPage = () => {
   return (
     <>
       <Layout>
-        <VStack spacing={44}>
-          <Container maxWidth='container.xl' mt={36}>
+        <Container mt={10} maxWidth='container.xl'>
+          <VStack spacing={44}>
+            <VStack
+              w='full'
+              alignItems={{ base: 'center', lg: 'end' }}
+              zIndex={-99}
+            >
+              <Box position='absolute'>
+                <Image
+                  position='absolute'
+                  height='10rem'
+                  w={{ base: '8rem', lg: '10rem' }}
+                  src='/big_moon.svg'
+                  alt='moon emoji'
+                  inset={0}
+                  zIndex={0}
+                  filter='blur(16px)'
+                />
+                <Image
+                  position='relative'
+                  height='10rem'
+                  w={{ base: '8rem', lg: '10rem' }}
+                  src='/big_moon.svg'
+                  alt='moon emoji'
+                  zIndex={100}
+                  inset={0}
+                />
+              </Box>
+            </VStack>
             <Box
               alignItems='center'
               textAlign='center'
@@ -95,92 +122,128 @@ const Home: NextPage = () => {
                 as='h1'
                 color='yellow.5'
                 fontSize={{ base: '4xl', lg: '6xl' }}
-                fontFamily={` "Lora", serif;`}
+                fontFamily={`"Lora", serif;`}
                 fontWeight='400'
               >
                 Decentralized forms and surveys
               </Heading>
               <Box maxW='container.md' pt={8}>
-                <Heading color='gray.200' fontSize={{ base: 'xl', lg: '3xl' }} as='h2' fontWeight='400'>
-                  Moonforms is end-to-end encrypted, censorship resistant and self-sovereign.
+                <Heading
+                  color='gray.200'
+                  fontSize={{ base: 'xl', lg: '3xl' }}
+                  as='h2'
+                  fontWeight='400'
+                >
+                  Moonforms is end-to-end encrypted, censorship resistant and
+                  self-sovereign.
                 </Heading>
               </Box>
+
               <Button
                 onClick={handleGetStartedClick}
                 p={7}
                 color='Black'
                 mt={20}
-                _hover={{ bg: 'purple.5' }}
+                _hover={{ bg: 'gray.300' }}
                 bg='white'
+                boxShadow=' 0 0 30px 0 rgba(255, 255, 255, 0.2)'
                 borderRadius='lg'
                 size='lg'
               >
                 Create a Moonform
               </Button>
+              <VStack
+                mt={{ base: 10, lg: 5 }}
+                w='full'
+                alignItems={{ base: 'center', lg: 'start' }}
+              >
+                <Box position='relative'>
+                  <Image
+                    position='absolute'
+                    height='10rem'
+                    w={{ base: '8rem', lg: '10rem' }}
+                    src='/rocket.svg'
+                    alt='rocket emoji'
+                    inset={0}
+                    zIndex={0}
+                    filter='blur(16px)'
+                  />
+                  <Image
+                    position='relative'
+                    height='10rem'
+                    w={{ base: '8rem', lg: '10rem' }}
+                    src='/rocket.svg'
+                    alt='rocket emoji'
+                    zIndex={100}
+                    inset={0}
+                  />
+                </Box>
+              </VStack>
             </Box>
-          </Container>
-          <Container maxWidth='container.xl'>
+
             <Box
               alignItems='center'
               textAlign='center'
               display='flex'
               flexDirection='column'
             >
-                <Text
-                  color='yellow.5'
-                  fontWeight='700'
+              <Text
+                color='yellow.5'
+                fontWeight='700'
                 fontSize={{ base: '4xl', lg: '5xl' }}
                 mb={8}
-                >
-                  Why Moonforms?
-                </Text>
+              >
+                Why Moonforms?
+              </Text>
               <VStack spacing={12}>
-                { BENEFITS.map((b) => {
+                {BENEFITS.map((b) => {
                   return (
                     <Box key={b.title}>
-                  <Text
-                    mt={8}
-                    color='white'
-                    fontWeight='700'
-                    fontSize={{ base: 'xl', lg: '2xl' }}
-                  >
-                    {b.title}
-                  </Text>
-                  <Stack
-                    mt={14}
-                    direction={['column', 'row']}
-                    spacing={12}
+                      <Text
+                        mt={8}
+                        color='white'
+                        fontWeight='700'
+                        fontSize={{ base: 'xl', lg: '2xl' }}
                       >
+                        {b.title}
+                      </Text>
+                      <Stack mt={14} direction={['column', 'row']} spacing={12}>
                         {b.breakdown.map((bb) => {
                           return (
                             <Box maxWidth='xs' key={bb.text}>
-                            <VStack spacing={8}>
-                            <Image height='3rem' src={bb.image} alt='moon emoji' />
-                            <Box>
-                              <Text color='white' fontSize='lg'>
-                                {bb.text}
-                              </Text>
+                              <VStack spacing={8}>
+                                <Image
+                                  height='3rem'
+                                  src={bb.image}
+                                  alt='moon emoji'
+                                />
+                                <Box>
+                                  <Text color='white' fontSize='lg'>
+                                    {bb.text}
+                                  </Text>
+                                </Box>
+                              </VStack>
                             </Box>
-                      </VStack>
-                    </Box>
-                          )
+                          );
                         })}
-
-                  </Stack>
-                </Box>
-                  )
+                      </Stack>
+                    </Box>
+                  );
                 })}
               </VStack>
             </Box>
-          </Container>
-          <Container maxWidth='container.lg'>
-            <Box alignItems='center' display='flex' flexDirection='column' px={{base: 8, lg: 12}}>
+            <Box
+              alignItems='center'
+              display='flex'
+              flexDirection='column'
+              px={{ base: 8, lg: 12 }}
+            >
               <VStack mt={{ base: 0, lg: 0 }}>
-              <Text
+                <Text
                   color='yellow.5'
                   fontWeight='700'
-                fontSize={{ base: '4xl', lg: '5xl' }}
-                mb={8}
+                  fontSize={{ base: '4xl', lg: '5xl' }}
+                  mb={8}
                 >
                   How does it work?
                 </Text>
@@ -190,7 +253,9 @@ const Home: NextPage = () => {
                     fontWeight='400'
                     fontSize={{ base: 'lg', lg: '2xl' }}
                   >
-                    Moonforms is powered by <Link href='https://polybase.xyz'>Polybase</Link>, a decentralized database.
+                    Moonforms is powered by{' '}
+                    <Link href='https://polybase.xyz'>Polybase</Link>, a
+                    decentralized database.
                   </Text>
                   <Text
                     color='white'
@@ -218,13 +283,18 @@ const Home: NextPage = () => {
                     fontWeight='400'
                     fontSize={{ base: 'lg', lg: '2xl' }}
                   >
-                    Don’t trust us, <Link href='https://github.com/polybase/moonforms' isExternal>check the code</Link>.
+                    Don’t trust us,{' '}
+                    <Link
+                      href='https://github.com/polybase/moonforms'
+                      isExternal
+                    >
+                      check the code
+                    </Link>
+                    .
                   </Text>
                 </Box>
               </VStack>
             </Box>
-          </Container>
-          <Container maxWidth='container.xl'>
             <Box
               alignItems='center'
               textAlign='center'
@@ -244,8 +314,9 @@ const Home: NextPage = () => {
                   onClick={handleGetStartedClick}
                   p={7}
                   color='Black'
-                  _hover={{ bg: 'purple.5' }}
+                  _hover={{ bg: 'gray.300' }}
                   bg='white'
+                  boxShadow=' 0 0 30px 0 rgba(255, 255, 255, 0.2)'
                   borderRadius='lg'
                   size='lg'
                 >
@@ -253,8 +324,8 @@ const Home: NextPage = () => {
                 </Button>
               </VStack>
             </Box>
-          </Container>
-        </VStack>
+          </VStack>
+        </Container>
       </Layout>
       <Box textColor='white' mt={24} p={3} w='full'>
         <Marquee gradient={false}>
@@ -262,33 +333,21 @@ const Home: NextPage = () => {
             {MARQUEE_MESSAGES.map((m, index) => {
               return (
                 <HStack key={`marquee_${index}`}>
-                <Text fontSize='xl' fontWeight={500}>
-                {m}
-              </Text>
-              <Text
-                fontSize='2xl'
-              >
-                ✦
-                    </Text>
-                  </HStack>
-                )
+                  <Text fontSize='xl' fontWeight={500}>
+                    {m}
+                  </Text>
+                  <Text fontSize='2xl'>✦</Text>
+                </HStack>
+              );
             })}
             <Text fontSize='xl' fontWeight={500}>
               Do you even decentralize bro?
             </Text>
-            <Text
-              fontSize='2xl'
-            >
-              ✦
-            </Text>
+            <Text fontSize='2xl'>✦</Text>
             <Text fontSize='xl' fontWeight={500}>
               Still using Google Forms?
             </Text>
-            <Text
-              fontSize='2xl'
-            >
-              ✦
-            </Text>
+            <Text fontSize='2xl'>✦</Text>
           </HStack>
         </Marquee>
       </Box>

@@ -13,10 +13,8 @@ export function useLogin() {
   const getWalletAccount = async (
     accountAddress: string
   ): Promise<{ createNewUser: boolean; wallet: Wallet }> => {
-    const user = await userCollection
-      .record(accountAddress)
-      .get()
-    console.log('accountAddress', accountAddress, user)
+    const user = await userCollection.record(accountAddress).get();
+    console.log('accountAddress', accountAddress, user);
     if (!user) {
       return { createNewUser: true, wallet: Wallet.generate() };
     } else {
@@ -36,7 +34,11 @@ export function useLogin() {
     const accountAddress = accounts[0];
     const user = await getWalletAccount(accountAddress);
 
-    console.log(user.createNewUser, accountAddress, user.wallet.getPublicKeyString())
+    console.log(
+      user.createNewUser,
+      accountAddress,
+      user.wallet.getPublicKeyString()
+    );
 
     db.signer(async (data) => {
       return {

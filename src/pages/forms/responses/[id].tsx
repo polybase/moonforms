@@ -1,10 +1,9 @@
-import { Box, Container, Text, VStack } from '@chakra-ui/react';
+import { Box, Container, VStack } from '@chakra-ui/react';
 import { usePolybase } from '@polybase/react';
 import { aescbc, decodeFromString, secp256k1 } from '@polybase/util';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
-import FormResponsesTable from '../../../components/Responses/FormResponsesTable';
 import { Layout } from '../../../features/common/Layout';
 import {
   FormAnswers,
@@ -70,7 +69,7 @@ const FormResponses = () => {
 
         const responses = await Promise.all(decryptedResponses);
         // todo show question titles as columns and answers as rows
-        console.log(responses.map(r => JSON.parse(r) as QuestionAnswer[]))
+        console.log(responses.map((r) => JSON.parse(r) as QuestionAnswer[]));
 
         setLoading(false);
         // eslint-disable-next-line no-empty
