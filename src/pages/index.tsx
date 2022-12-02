@@ -82,15 +82,36 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Stack
+        w='full'
+        position='relative'
+        alignItems={{ base: 'center', lg: 'start' }}
+      >
+        <Box
+          position='absolute'
+          width='200px'
+          height='330px'
+          top='0'
+          right='0'
+          bottom='0'
+          left='0'
+          borderRadius='0px 250px 250px 0px'
+          bgColor='#afb1ff'
+          opacity='60%'
+          filter='blur(84px)'
+          mb={20}
+          // backgroundImage="radial-gradient(green, yellow, red)"
+        />
+      </Stack>
       <Layout>
-        <Container mt={10} maxWidth='container.xl'>
-          <VStack spacing={44}>
+        <Container mt={10} maxWidth='container.2xl'>
+          <VStack spacing={28}>
             <VStack
               w='full'
               alignItems={{ base: 'center', lg: 'end' }}
               zIndex={-99}
             >
-              <Box position='absolute'>
+              <Box position='absolute' mr={{ base: 0, lg: 80 }}>
                 <Image
                   position='absolute'
                   height='10rem'
@@ -112,6 +133,7 @@ const Home: NextPage = () => {
                 />
               </Box>
             </VStack>
+
             <Box
               alignItems='center'
               textAlign='center'
@@ -152,6 +174,7 @@ const Home: NextPage = () => {
               >
                 Create a Moonform
               </Button>
+
               <VStack
                 mt={{ base: 10, lg: 5 }}
                 w='full'
@@ -180,7 +203,23 @@ const Home: NextPage = () => {
                 </Box>
               </VStack>
             </Box>
-
+            <Stack
+              w='full'
+              position='relative'
+              alignItems={{ base: 'center', lg: 'end' }}
+            >
+              <Box
+                position='absolute'
+                width='200px'
+                height='330px'
+                top='0'
+                right='0'
+                borderRadius='250px 0px 0px 250px'
+                bgColor='#ffafc4'
+                opacity='60%'
+                filter='blur(84px)'
+              />
+            </Stack>
             <Box
               alignItems='center'
               textAlign='center'

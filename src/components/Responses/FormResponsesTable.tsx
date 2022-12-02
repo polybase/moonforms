@@ -1,10 +1,3 @@
-import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
 import { useState } from 'react';
 
 import { FormAnswers } from '../../features/types';
@@ -13,12 +6,10 @@ interface FormResponsesProps {
   questionAnswers: FormAnswers[];
 }
 const FormResponsesTable = ({ questionAnswers }: FormResponsesProps) => {
-  const [data, setData] = useState<FormAnswers[]>(() => [
-    ...questionAnswers,
-  ]);
-  const groupTitles = data.map(q => q.title);
+  const [data, setData] = useState<FormAnswers[]>(() => [...questionAnswers]);
+  const groupTitles = data.map((q) => q.title);
 
-  console.log(data)
+  console.log(data);
 
   // const columnHelper = createColumnHelper<FormAnswers>();
   // const columns = []
