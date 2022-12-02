@@ -89,8 +89,8 @@ const Home: NextPage = () => {
       >
         <Box
           position='absolute'
-          width='200px'
-          height='330px'
+          width={{base: '100px', lg: '200px'}}
+          height={{base: '233px', lg: '333px'}}
           top='0'
           right='0'
           bottom='0'
@@ -100,7 +100,6 @@ const Home: NextPage = () => {
           opacity='60%'
           filter='blur(84px)'
           mb={20}
-          // backgroundImage="radial-gradient(green, yellow, red)"
         />
       </Stack>
       <Layout>
@@ -146,6 +145,7 @@ const Home: NextPage = () => {
                 fontSize={{ base: '4xl', lg: '6xl' }}
                 fontFamily={`"Lora", serif;`}
                 fontWeight='400'
+                mt={{base: 20, lg: 0}}
               >
                 Decentralized forms and surveys
               </Heading>
@@ -210,8 +210,8 @@ const Home: NextPage = () => {
             >
               <Box
                 position='absolute'
-                width='200px'
-                height='330px'
+                width={{base: '100px', lg: '200px'}}
+                height={{base: '233px', lg: '333px'}}
                 top='0'
                 right='0'
                 borderRadius='250px 0px 0px 250px'
