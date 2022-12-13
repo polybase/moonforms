@@ -53,7 +53,6 @@ const FormDetails = () => {
         focusBorderColor='white'
         borderColor='white'
         fontSize='xl'
-        p={6}
         boxShadow='md'
         w={{ base: 'full', sm: 'lg', md: 'lg', lg: '3xl' }}
         placeholder='Untitled form'
@@ -72,7 +71,6 @@ const FormDetails = () => {
         Description
       </Text>
       <Textarea
-        px={6}
         boxShadow='md'
         fontSize='xl'
         color='white'

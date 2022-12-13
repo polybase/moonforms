@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Container,
   Heading,
   HStack,
   Image,
@@ -103,7 +102,6 @@ const Home: NextPage = () => {
         />
       </Stack>
       <Layout>
-        <Container mt={10} maxWidth='container.2xl'>
           <VStack spacing={28}>
             <VStack
               w='full'
@@ -364,7 +362,6 @@ const Home: NextPage = () => {
               </VStack>
             </Box>
           </VStack>
-        </Container>
       </Layout>
       <Box textColor='white' mt={24} p={3} w='full'>
         <Marquee gradient={false}>

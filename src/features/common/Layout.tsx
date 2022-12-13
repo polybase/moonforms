@@ -44,7 +44,7 @@ export function Layout({ children, isLoading }: LayoutProps) {
       </Head>
       <Flex height='100%' flexDirection='column'>
         <Container maxW='container.xl'>
-          <HStack p={8}>
+          <HStack py={8}>
             <Box>
               <Image
                 height='3rem'
@@ -60,7 +60,6 @@ export function Layout({ children, isLoading }: LayoutProps) {
                 bg='transparent'
                 bgGradient='radial(78.9% 78.52% at 24.68% 21.48%, rgba(73, 70, 182, 0.6) 0%, rgba(107, 105, 207, 0.26) 100%)'
                 onClick={login}
-                p={7}
                 size={{ base: 'sm', lg: 'lg' }}
                 fontSize={{ base: 'sm', lg: 'xl' }}
               >
@@ -78,7 +77,6 @@ export function Layout({ children, isLoading }: LayoutProps) {
                     bg='transparent'
                     bgGradient='radial(78.9% 78.52% at 24.68% 21.48%, rgba(73, 70, 182, 0.6) 0%, rgba(107, 105, 207, 0.26) 100%)'
                     as={Button}
-                    p={7}
                     rightIcon={<Icon as={CaretDown} />}
                   >
                     {shortEthAddress(auth.accountAddress)}
@@ -121,18 +119,18 @@ export function Layout({ children, isLoading }: LayoutProps) {
               </>
             )}
           </HStack>
+          <Box>
+            {isLoading ? (
+              <Center>
+                <Box>
+                  <Loading loading center data-test='layout-loading' />
+                </Box>
+              </Center>
+            ) : (
+              children
+            )}
+          </Box>
         </Container>
-        <Box>
-          {isLoading ? (
-            <Center>
-              <Box>
-                <Loading loading center data-test='layout-loading' />
-              </Box>
-            </Center>
-          ) : (
-            children
-          )}
-        </Box>
       </Flex>
     </>
   );

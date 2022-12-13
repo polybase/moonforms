@@ -1,4 +1,4 @@
-import { Box, Button, Container, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Container, Heading, Text, VStack } from '@chakra-ui/react';
 import { CollectionList } from '@polybase/client';
 import { usePolybase } from '@polybase/react';
 import { map } from 'lodash';
@@ -45,12 +45,11 @@ const Dashboard = () => {
 
   return (
     <Layout isLoading={isLoading}>
-      <Container maxWidth='container.lg'>
         <VStack display='flex' alignItems='left'>
           <Box display='flex' alignItems='start' flexDirection='column'>
-            <Text color='white' fontSize='lg' fontWeight={600}>
+            <Heading color='white' fontSize='4xl'>
               Your forms
-            </Text>
+            </Heading>
             <Button
               onClick={async () => {
                 router.push('/forms/new');
@@ -88,7 +87,7 @@ const Dashboard = () => {
                     textAlign='center'
                     color='white'
                   >
-                    🌙 No forms to moon here!
+                    You don't have any forms yet.
                   </Text>
                 </Box>
               )}
@@ -96,7 +95,6 @@ const Dashboard = () => {
             </VStack>
           </Box>
         </VStack>
-      </Container>
     </Layout>
   );
 };
