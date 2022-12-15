@@ -23,6 +23,7 @@ import { map } from 'lodash';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
+import PoweredByPolybase from '../../components/common/PoweredByPolybase';
 
 import ResponseQuestion from '../../components/Questions/ResponseCard';
 import { Layout } from '../../features/common/Layout';
@@ -278,14 +279,7 @@ const FormResponsePage = () => {
                 The contents of this response is end-to-end encrypted and can only be viewed
                 by you and the form owner.
               </Text>
-              <ChakraLink href='https://polybase.xyz' isExternal>
-              <HStack>
-                  <Text color='gray.500'>
-                    Powered by
-                  </Text>
-                  <Image src='/polybase-lockup-white.svg' alt='Polybase web3 database' height='24px' />
-                </HStack>
-              </ChakraLink>
+              <PoweredByPolybase />
             </VStack>
           </Box>
         </VStack>

@@ -366,24 +366,16 @@ const Home: NextPage = () => {
       <Box textColor='white' mt={24} p={3} w='full'>
         <Marquee gradient={false}>
           <HStack spacing={12} pl={12}>
-            {MARQUEE_MESSAGES.map((m, index) => {
+            {[...MARQUEE_MESSAGES, ...MARQUEE_MESSAGES].map((m, index) => {
               return (
                 <HStack key={`marquee_${index}`}>
-                  <Text fontSize='xl' fontWeight={500}>
+                  <Text fontSize='xl' fontWeight={500} pr={12}>
                     {m}
                   </Text>
                   <Text fontSize='2xl'>✦</Text>
                 </HStack>
               );
             })}
-            <Text fontSize='xl' fontWeight={500}>
-              Do you even decentralize bro?
-            </Text>
-            <Text fontSize='2xl'>✦</Text>
-            <Text fontSize='xl' fontWeight={500}>
-              Still using Google Forms?
-            </Text>
-            <Text fontSize='2xl'>✦</Text>
           </HStack>
         </Marquee>
       </Box>

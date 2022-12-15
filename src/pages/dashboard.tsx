@@ -45,8 +45,8 @@ const Dashboard = () => {
 
   return (
     <Layout isLoading={isLoading}>
-        <VStack display='flex' alignItems='left'>
-          <Box display='flex' alignItems='start' flexDirection='column'>
+        <VStack alignItems='left'>
+          <Box>
             <Heading color='white' fontSize='4xl'>
               Your forms
             </Heading>
@@ -93,7 +93,7 @@ const Dashboard = () => {
               )}
               {createdUserForms}
             </VStack>
-          </Box>
+        </Box>
         </VStack>
     </Layout>
   );
