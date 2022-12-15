@@ -1,4 +1,4 @@
-import { Box, Button, Container, Heading, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Heading, Text, VStack } from '@chakra-ui/react';
 import { CollectionList } from '@polybase/client';
 import { usePolybase } from '@polybase/react';
 import { map } from 'lodash';
@@ -87,7 +87,7 @@ const Dashboard = () => {
                     textAlign='center'
                     color='white'
                   >
-                    You don't have any forms yet.
+                    You do not have any forms yet.
                   </Text>
                 </Box>
               )}
