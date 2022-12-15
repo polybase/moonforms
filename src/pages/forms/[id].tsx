@@ -4,6 +4,9 @@ import {
   Button,
   Container,
   Fade,
+  HStack,
+  Image,
+  Link as ChakraLink,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -183,6 +186,22 @@ const FormResponsePage = () => {
           display='flex'
           flexDirection='column'
         >
+          {alertDetails.show && (
+            <Fade in={alertDetails.show} unmountOnExit={true}>
+              <Alert
+                rounded='lg'
+                fontSize='lg'
+                fontWeight={500}
+                color={
+                  alertDetails.type === 'error' ? 'red.800' : 'green.800'
+                }
+                status={alertDetails.type}
+                w='full'
+              >
+                <Text>{alertDetails.message}</Text>
+              </Alert>
+            </Fade>
+          )}
           <Box
             w='full'
             borderRadius='md'
@@ -203,22 +222,6 @@ const FormResponsePage = () => {
             </Text>
           </Box>
           <Box w='full' borderRadius='md' maxWidth='container.lg'>
-            {alertDetails.show && (
-              <Fade in={alertDetails.show} unmountOnExit={true}>
-                <Alert
-                  rounded='lg'
-                  fontSize='lg'
-                  fontWeight={500}
-                  color={
-                    alertDetails.type === 'error' ? 'red.800' : 'green.800'
-                  }
-                  status={alertDetails.type}
-                  w='full'
-                >
-                  <Text>{alertDetails.message}</Text>
-                </Alert>
-              </Fade>
-            )}
             <Formik
               initialValues={
                 {
@@ -270,15 +273,19 @@ const FormResponsePage = () => {
             mt={20}
             w='full'
           >
-            <VStack>
+            <VStack spacing={8}>
               <Text mt={5} color='gray.500'>
-                The content of this response is encrypted and can only be viewed
-                by you and the forms owner
+                The contents of this response is end-to-end encrypted and can only be viewed
+                by you and the form owner.
               </Text>
-              <Text color='gray.600' fontWeight={700}>
-                {' '}
-                Powered by Polybase
-              </Text>
+              <ChakraLink href='https://polybase.xyz' isExternal>
+              <HStack>
+                  <Text color='gray.500'>
+                    Powered by
+                  </Text>
+                  <Image src='/polybase-lockup-white.svg' alt='Polybase web3 database' height='24px' />
+                </HStack>
+              </ChakraLink>
             </VStack>
           </Box>
         </VStack>
